@@ -1,5 +1,6 @@
 ﻿namespace Rsvp.Api;
 
+using Rsvp.Api.Extensions;
 using Rsvp.Application;
 using Rsvp.Infrastructure;
 
@@ -9,6 +10,8 @@ public static class DependencyInjection
 {
   public static void AddServices(this IServiceCollection services, IConfiguration configuration)
   {
+    services.AddSwaggerServices(configuration);
+
     services.AddApplicationServices();
     services.AddInfrastructureServices(configuration);
   }
