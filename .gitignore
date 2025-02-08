@@ -1,0 +1,70 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/out-tsc
+**/dist
+**/bin
+**/obj
+**/out/
+**/build/
+
+# dependencies
+node_modules
+**/.venv/
+
+# IDEs and editors
+.idea
+.vs
+.vscode
+.project
+.classpath
+*.launch
+.settings/
+*.sublime-workspace
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/.sass-cache
+/coverage
+npm-debug.log
+yarn-error.log
+/typings
+results/*
+browser/*
+
+# System Files
+.DS_Store
+Thumbs.db
+
+.angular
+
+# Temporary files
+*.tmp
+*.bak
+
+# NX cache files
+.nx
+
+#yarn cache files
+.yarn/install-state.gz
+
+# Generated files
+.docusaurus
+.cache-loader
+
+# Misc
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+yarn-debug.log*
+yarn-error.log*
+
+storybook-static

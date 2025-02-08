@@ -1,0 +1,6 @@
+@Rsvp.api_HostAddress = http://localhost:5023
+
+GET {{Rsvp.api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
