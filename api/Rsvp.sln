@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rsvp.api", "Rsvp.api\Rsvp.api.csproj", "{0839D92A-A5B2-41D8-91B3-E7CAF9FAED8D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rsvp.Api", "Rsvp.Api\Rsvp.Api.csproj", "{0839D92A-A5B2-41D8-91B3-E7CAF9FAED8D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rsvp.Application", "Rsvp.Application\Rsvp.Application.csproj", "{FB0E0C93-BE80-4497-938A-FC9E5D9A03F5}"
 EndProject
