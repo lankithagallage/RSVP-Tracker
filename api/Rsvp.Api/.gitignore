@@ -1,5 +1,3 @@
 #user configurations
 *.user
 *.local.*
-
-/wwwroot/
