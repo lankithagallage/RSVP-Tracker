@@ -2,7 +2,9 @@ name: .NET API Tests
 
 on:
   pull_request:
-    branches: [ "main" ]
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
     paths:
       - "RSVP-Tracker/api/**"
 
@@ -16,19 +18,19 @@ jobs:
         working-directory: RSVP-Tracker/api
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: 8.0.x
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
 
-    - name: Restore NuGet Packages
-      run: dotnet restore
+      - name: Restore NuGet Packages
+        run: dotnet restore
 
-    - name: Build the API Project
-      run: dotnet build --no-restore
+      - name: Build the API Project
+        run: dotnet build --no-restore --configuration Release
 
-    - name: Run Unit & Integration Tests
-      run: dotnet test --no-build --verbosity normal
+      - name: Run Unit & Integration Tests
+        run: dotnet test --no-build --configuration Release --verbosity normal
