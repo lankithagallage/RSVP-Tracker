@@ -3,6 +3,8 @@ name: .NET Code Formatting
 on:
   pull_request:
     types: [opened, synchronize, reopened]
+    branches:
+      - '**'
 
 jobs:
   editorconfig:
