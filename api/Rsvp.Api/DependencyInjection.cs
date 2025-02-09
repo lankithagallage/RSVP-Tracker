@@ -27,12 +27,12 @@ public static class DependencyInjection
     return application;
   }
 
-  public static void AddServices(this IServiceCollection services, IConfiguration configuration)
+  public static void AddServices(this IServiceCollection services, IConfiguration configuration, bool isDevelopment)
   {
     services.AddSwaggerServices(configuration);
 
     services.AddApplicationServices();
-    services.AddInfrastructureServices(configuration);
+    services.AddInfrastructureServices(configuration, isDevelopment);
   }
 
   public static void AddLoggingServices(this WebApplicationBuilder builder)
