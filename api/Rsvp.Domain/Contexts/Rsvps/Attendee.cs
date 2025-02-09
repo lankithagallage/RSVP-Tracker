@@ -5,21 +5,9 @@ using Rsvp.Domain.Contexts.Users;
 
 public class Attendee
 {
-  public Guid Id { get; private set; }
-  public Event Event { get; private set; }
-  public User User { get; private set; }
-  public RsvpStatus Status { get; private set; }
-  public DateTimeOffset CreatedAt { get; private set; }
-  public DateTimeOffset ModifiedAt { get; private set; }
-
   private readonly TimeProvider timeProvider = TimeProvider.System;
 
   private Attendee() { }
-
-  public static Attendee CreateNew(Event @event, User user)
-  {
-    return new Attendee(@event, user);
-  }
 
   private Attendee(Event @event, User user)
   {
@@ -27,13 +15,25 @@ public class Attendee
     this.Event = @event;
     this.User = user;
     this.Status = RsvpStatus.Pending;
-    this.CreatedAt = timeProvider.GetUtcNow();
+    this.CreatedAt = this.timeProvider.GetUtcNow();
+  }
+
+  public Guid Id { get; private set; }
+  public Event Event { get; private set; }
+  public User User { get; private set; }
+  public RsvpStatus Status { get; private set; }
+  public DateTimeOffset CreatedAt { get; private set; }
+  public DateTimeOffset ModifiedAt { get; private set; }
+
+  public static Attendee CreateNew(Event @event, User user)
+  {
+    return new Attendee(@event, user);
   }
 
   public void Confirm()
   {
     this.Status = RsvpStatus.Confirmed;
-    this.ModifiedAt = timeProvider.GetUtcNow();
+    this.ModifiedAt = this.timeProvider.GetUtcNow();
   }
 
   public void Cancel()
