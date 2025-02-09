@@ -3,6 +3,11 @@ using Rsvp.Api.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configurations
+builder.Configuration
+  .AddJsonFile("appsettings.Local.json", true, true)
+  .AddEnvironmentVariables();
+
 builder.AddLoggingServices();
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
