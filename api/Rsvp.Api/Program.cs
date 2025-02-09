@@ -14,17 +14,8 @@ builder.Services.AddControllers();
 
 builder.Services.AddServices(builder.Configuration);
 
-var app = builder.Build();
+var app = builder.Build().Configure();
 
-app.UseExceptionHandler();
 
-if (app.Environment.IsDevelopment())
-{
-  app.UseSwagger();
-  app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-app.MapControllers();
 
 app.Run();
