@@ -6,7 +6,7 @@ using Rsvp.Domain.Contexts.Rsvps;
 using Rsvp.Domain.Interfaces;
 using Rsvp.Infrastructure.Persistence.SeedData.Json;
 
-public class AttendeeSeeder(RsvpContext context, IJsonFileReader jsonReader, ILogger<AttendeeSeeder> logger): ISeeder
+public class AttendeeSeeder(RsvpContext context, IJsonFileReader jsonReader, ILogger<AttendeeSeeder> logger) : ISeeder
 {
   public void Seed()
   {
@@ -28,7 +28,7 @@ public class AttendeeSeeder(RsvpContext context, IJsonFileReader jsonReader, ILo
         continue;
       }
 
-      var newAttendee = Attendee.CreateNew(a.Id, @event, user, a.CreatedAt, a.ModifiedAt);
+      var newAttendee = Attendee.CreateNew(a.Id, @event, user);
       if (a.Status == "Confirmed")
       {
         newAttendee.Confirm();
