@@ -22,18 +22,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Persistence\SeedData\Json\attendees.json" />
-    <EmbeddedResource Include="Persistence\SeedData\Json\attendees.json">
+    <None Update="Persistence\SeedData\Json\attendees.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <None Remove="Persistence\SeedData\Json\events.json" />
-    <EmbeddedResource Include="Persistence\SeedData\Json\events.json">
+    </None>
+    <None Update="Persistence\SeedData\Json\events.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <None Remove="Persistence\SeedData\Json\users.json" />
-    <EmbeddedResource Include="Persistence\SeedData\Json\users.json">
+    </None>
+    <None Update="Persistence\SeedData\Json\users.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </EmbeddedResource>
+    </None>
   </ItemGroup>
 
 </Project>

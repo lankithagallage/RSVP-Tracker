@@ -1,13 +1,12 @@
 ﻿namespace Rsvp.Infrastructure.Persistence.SeedData.Seeders;
 
-using System.Text.Json;
-
 using Microsoft.Extensions.Logging;
 
 using Rsvp.Domain.Contexts.Users;
+using Rsvp.Domain.Interfaces;
 using Rsvp.Infrastructure.Persistence.SeedData.Json;
 
-public class UserSeeder(RsvpContext context, ILogger<UserSeeder> logger) : ISeeder
+public class UserSeeder(RsvpContext context, IJsonFileReader jsonReader, ILogger<UserSeeder> logger) : ISeeder
 {
   public void Seed()
   {
@@ -17,11 +16,8 @@ public class UserSeeder(RsvpContext context, ILogger<UserSeeder> logger) : ISeed
       return;
     }
 
-    var json = JsonFileReader.LoadJsonFile("users.json");
-    var users = JsonSerializer.Deserialize<List<UserJson>>(json);
+    var users = jsonReader.LoadData<UserJson>("users.json");
 
-    if (users != null)
-    {
       // @formatter:off
       foreach (var newUser in users.Select(u =>
                 User.CreateNew(u.Id, u.FirstName, u.LastName, u.Email, Enum.Parse<UserRole>(u.Role))))
@@ -29,7 +25,6 @@ public class UserSeeder(RsvpContext context, ILogger<UserSeeder> logger) : ISeed
         context.Users.Add(newUser);
       }
       // @formatter:on
-    }
 
     context.SaveChanges();
     logger.LogInformation("Seeded users.");

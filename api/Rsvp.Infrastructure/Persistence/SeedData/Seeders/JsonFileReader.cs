@@ -1,21 +1,21 @@
 ﻿namespace Rsvp.Infrastructure.Persistence.SeedData.Seeders;
 
-using System.Reflection;
+using System.Text.Json;
 
-public static class JsonFileReader
+using Rsvp.Domain.Interfaces;
+
+public class JsonFileReader(string baseDirectory) : IJsonFileReader
 {
-  public static string LoadJsonFile(string fileName)
+  public List<T> LoadData<T>(string fileName)
   {
-    // Get the full path of the build directory
-    var baseDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-    var jsonFilePath = Path.Combine(baseDirectory ?? throw new InvalidOperationException(), "Persistence", "SeedData",
-      "Json", fileName);
+    var jsonFilePath = Path.Combine(baseDirectory, fileName);
 
     if (!File.Exists(jsonFilePath))
     {
       throw new FileNotFoundException($"JSON file not found: {jsonFilePath}");
     }
 
-    return File.ReadAllText(jsonFilePath);
+    var json = File.ReadAllText(jsonFilePath);
+    return JsonSerializer.Deserialize<List<T>>(json) ?? [];
   }
 }
