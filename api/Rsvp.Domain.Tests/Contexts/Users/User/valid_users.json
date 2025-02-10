@@ -1,0 +1,72 @@
+﻿[
+  {
+    "Id": "75aa2d26-30a0-48f7-9193-c41cc2625049",
+    "FirstName": "UserFirst1",
+    "LastName": "UserLast1",
+    "Email": "user1@example.com",
+    "Role": "Attendee"
+  },
+  {
+    "Id": "063fb784-d8b2-40fc-9f7e-f0cc6ac090b6",
+    "FirstName": "UserFirst2",
+    "LastName": "UserLast2",
+    "Email": "user2@example.com",
+    "Role": "Organizer"
+  },
+  {
+    "Id": "f8a7dbe0-bf64-493e-9f19-37751294b1dd",
+    "FirstName": "UserFirst3",
+    "LastName": "UserLast3",
+    "Email": "user3@example.com",
+    "Role": "Admin"
+  },
+  {
+    "Id": "8a0c9230-55db-4b44-9fba-a8ddd13ddc92",
+    "FirstName": "UserFirst4",
+    "LastName": "UserLast4",
+    "Email": "user4@example.com",
+    "Role": "Attendee"
+  },
+  {
+    "Id": "6548de0c-2dcc-42c4-b918-ccd53eec59ba",
+    "FirstName": "UserFirst5",
+    "LastName": "UserLast5",
+    "Email": "user5@example.com",
+    "Role": "Organizer"
+  },
+  {
+    "Id": "7fa9678e-3a5c-4d1c-bf63-f812f61221e9",
+    "FirstName": "UserFirst6",
+    "LastName": "UserLast6",
+    "Email": "user6@example.com",
+    "Role": "Admin"
+  },
+  {
+    "Id": "872c240d-2095-4f50-83b6-638b996e46ee",
+    "FirstName": "UserFirst7",
+    "LastName": "UserLast7",
+    "Email": "user7@example.com",
+    "Role": "Attendee"
+  },
+  {
+    "Id": "2241165f-e3ff-4929-988a-99d25a050be5",
+    "FirstName": "UserFirst8",
+    "LastName": "UserLast8",
+    "Email": "user8@example.com",
+    "Role": "Organizer"
+  },
+  {
+    "Id": "589a7b76-bc80-4c25-b286-9d896e774627",
+    "FirstName": "UserFirst9",
+    "LastName": "UserLast9",
+    "Email": "user9@example.com",
+    "Role": "Admin"
+  },
+  {
+    "Id": "a2a3c5cc-f559-44a0-89ea-fba286e68e1d",
+    "FirstName": "UserFirst10",
+    "LastName": "UserLast10",
+    "Email": "user10@example.com",
+    "Role": "Attendee"
+  }
+]

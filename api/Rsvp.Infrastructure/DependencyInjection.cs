@@ -1,5 +1,7 @@
 ﻿namespace Rsvp.Infrastructure;
 
+using System.Reflection;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Rsvp.Domain.Contexts.Events;
 using Rsvp.Domain.Contexts.Rsvps;
 using Rsvp.Domain.Contexts.Users;
+using Rsvp.Domain.Interfaces;
 using Rsvp.Infrastructure.Persistence;
 using Rsvp.Infrastructure.Persistence.Repositories.Events;
 using Rsvp.Infrastructure.Persistence.Repositories.Rsvps;
@@ -19,6 +22,10 @@ public static class DependencyInjection
   public static void AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration,
     bool isDevelopment)
   {
+    var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
+    services.AddSingleton<IJsonFileReader>(
+      new JsonFileReader(Path.Combine(assemblyPath, "Persistence", "SeedData", "Json")));
+
     services.AddScoped<ISeeder, EventSeeder>();
     services.AddScoped<ISeeder, UserSeeder>();
     services.AddScoped<ISeeder, AttendeeSeeder>();

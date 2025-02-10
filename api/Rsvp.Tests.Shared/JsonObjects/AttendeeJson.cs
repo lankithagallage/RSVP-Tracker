@@ -1,4 +1,4 @@
-﻿namespace Rsvp.Infrastructure.Persistence.SeedData.Json;
+﻿namespace Rsvp.Tests.Shared.JsonObjects;
 
 public class AttendeeJson
 {

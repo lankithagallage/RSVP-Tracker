@@ -1,13 +1,12 @@
 ﻿namespace Rsvp.Infrastructure.Persistence.SeedData.Seeders;
 
-using System.Text.Json;
-
 using Microsoft.Extensions.Logging;
 
 using Rsvp.Domain.Contexts.Events;
+using Rsvp.Domain.Interfaces;
 using Rsvp.Infrastructure.Persistence.SeedData.Json;
 
-public class EventSeeder(RsvpContext context, ILogger<EventSeeder> logger) : ISeeder
+public class EventSeeder(RsvpContext context, IJsonFileReader jsonReader, ILogger<EventSeeder> logger) : ISeeder
 {
   public void Seed()
   {
@@ -17,19 +16,15 @@ public class EventSeeder(RsvpContext context, ILogger<EventSeeder> logger) : ISe
       return;
     }
 
-    var json = JsonFileReader.LoadJsonFile("events.json");
-    var events = JsonSerializer.Deserialize<List<EventJson>>(json);
+    var events = jsonReader.LoadData<EventJson>("events.json");
 
-    if (events != null)
-    {
-      // @formatter:off
-      foreach (var newEvent in events.Select(e =>
+    // @formatter:off
+    foreach (var newEvent in events.Select(e =>
                 Event.CreateNew(e.Id, e.Title, e.Description, e.StartTime, e.EndTime)))
-      {
-        context.Events.Add(newEvent);
-      }
-      // @formatter:on
+    {
+      context.Events.Add(newEvent);
     }
+    // @formatter:on
 
     context.SaveChanges();
     logger.LogInformation("Seeded events.");

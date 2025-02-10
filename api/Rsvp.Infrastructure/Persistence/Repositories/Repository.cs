@@ -11,7 +11,7 @@ public class Repository<T>(RsvpContext context) : IRepository<T>
 
   public async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
   {
-    return await this.dbSet.FindAsync([id], cancellationToken: cancellationToken);
+    return await this.dbSet.FindAsync([id], cancellationToken);
   }
 
   public async Task<List<T>> GetAllAsync(CancellationToken cancellationToken)
@@ -33,7 +33,7 @@ public class Repository<T>(RsvpContext context) : IRepository<T>
 
   public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
   {
-    var entity = await this.dbSet.FindAsync([id], cancellationToken: cancellationToken);
+    var entity = await this.dbSet.FindAsync([id], cancellationToken);
     if (entity != null)
     {
       this.dbSet.Remove(entity);

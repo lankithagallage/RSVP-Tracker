@@ -1,13 +1,12 @@
 ﻿namespace Rsvp.Infrastructure.Persistence.SeedData.Seeders;
 
-using System.Text.Json;
-
 using Microsoft.Extensions.Logging;
 
 using Rsvp.Domain.Contexts.Rsvps;
+using Rsvp.Domain.Interfaces;
 using Rsvp.Infrastructure.Persistence.SeedData.Json;
 
-public class AttendeeSeeder(RsvpContext context, ILogger<AttendeeSeeder> logger) : ISeeder
+public class AttendeeSeeder(RsvpContext context, IJsonFileReader jsonReader, ILogger<AttendeeSeeder> logger) : ISeeder
 {
   public void Seed()
   {
@@ -17,29 +16,25 @@ public class AttendeeSeeder(RsvpContext context, ILogger<AttendeeSeeder> logger)
       return;
     }
 
-    var json = JsonFileReader.LoadJsonFile("attendees.json");
-    var attendees = JsonSerializer.Deserialize<List<AttendeeJson>>(json);
+    var attendees = jsonReader.LoadData<AttendeeJson>("attendees.json");
 
-    if (attendees != null)
+    foreach (var a in attendees)
     {
-      foreach (var a in attendees)
+      var @event = context.Events.FirstOrDefault(e => e.Id == a.EventId);
+      var user = context.Users.FirstOrDefault(u => u.Id == a.UserId);
+
+      if (@event == null || user == null)
       {
-        var @event = context.Events.FirstOrDefault(e => e.Id == a.EventId);
-        var user = context.Users.FirstOrDefault(u => u.Id == a.UserId);
-
-        if (@event == null || user == null)
-        {
-          continue;
-        }
-
-        var newAttendee = Attendee.CreateNew(a.Id, @event, user, a.CreatedAt, a.ModifiedAt);
-        if (a.Status == "Confirmed")
-        {
-          newAttendee.Confirm();
-        }
-
-        context.Attendees.Add(newAttendee);
+        continue;
       }
+
+      var newAttendee = Attendee.CreateNew(a.Id, @event, user);
+      if (a.Status == "Confirmed")
+      {
+        newAttendee.Confirm();
+      }
+
+      context.Attendees.Add(newAttendee);
     }
 
     context.SaveChanges();
