@@ -1,7 +1,5 @@
 ﻿namespace Rsvp.Infrastructure;
 
-using System;
-
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

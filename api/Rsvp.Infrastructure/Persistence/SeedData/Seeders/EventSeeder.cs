@@ -22,11 +22,13 @@ public class EventSeeder(RsvpContext context, ILogger<EventSeeder> logger) : ISe
 
     if (events != null)
     {
+      // @formatter:off
       foreach (var newEvent in events.Select(e =>
-                 Event.CreateNew(e.Id, e.Title, e.Description, e.StartTime, e.EndTime)))
+                Event.CreateNew(e.Id, e.Title, e.Description, e.StartTime, e.EndTime)))
       {
         context.Events.Add(newEvent);
       }
+      // @formatter:on
     }
 
     context.SaveChanges();

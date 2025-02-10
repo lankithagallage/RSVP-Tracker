@@ -22,11 +22,13 @@ public class UserSeeder(RsvpContext context, ILogger<UserSeeder> logger) : ISeed
 
     if (users != null)
     {
+      // @formatter:off
       foreach (var newUser in users.Select(u =>
-                 User.CreateNew(u.Id, u.FirstName, u.LastName, u.Email, Enum.Parse<UserRole>(u.Role))))
+                User.CreateNew(u.Id, u.FirstName, u.LastName, u.Email, Enum.Parse<UserRole>(u.Role))))
       {
         context.Users.Add(newUser);
       }
+      // @formatter:on
     }
 
     context.SaveChanges();
