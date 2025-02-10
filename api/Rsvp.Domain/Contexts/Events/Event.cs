@@ -10,6 +10,26 @@ public class Event
 
   private Event(Guid id, string title, string description, DateTime startTime, DateTime endTime)
   {
+    if (string.IsNullOrWhiteSpace(title))
+    {
+      throw new ArgumentException("Title cannot be empty.", nameof(title));
+    }
+
+    if (string.IsNullOrWhiteSpace(description))
+    {
+      throw new ArgumentException("Description cannot be empty.", nameof(description));
+    }
+
+    if (startTime >= endTime)
+    {
+      throw new ArgumentException("Start time must be before end time.", nameof(startTime));
+    }
+
+    if (startTime < DateTime.UtcNow)
+    {
+      throw new ArgumentException("Start time cannot be in the past.", nameof(startTime));
+    }
+
     this.Id = id;
     this.Title = title;
     this.Description = description;
@@ -37,9 +57,14 @@ public class Event
 
   public void AddAttendee(Attendee attendee)
   {
-    if (this.attendees.Any(a => a.User.Email == attendee.User.Email))
+    if (attendee == null)
     {
-      throw new InvalidOperationException("Attendee is already registered for this event.");
+      throw new ArgumentNullException(nameof(attendee), "Attendee cannot be null.");
+    }
+
+    if (this.attendees.Any(a => a.User.Email.Equals(attendee.User.Email, StringComparison.OrdinalIgnoreCase)))
+    {
+      throw new InvalidOperationException("Attendee with this email is already registered for this event.");
     }
 
     this.attendees.Add(attendee);

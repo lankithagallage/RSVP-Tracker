@@ -1,11 +1,38 @@
 ﻿namespace Rsvp.Domain.Contexts.Users;
 
-public class User
+using System.Text.RegularExpressions;
+
+public partial class User
 {
   protected User() { }
 
   private User(Guid id, string firstName, string lastName, string email, UserRole role)
   {
+    if (string.IsNullOrWhiteSpace(firstName))
+    {
+      throw new ArgumentException("First name cannot be empty.", nameof(firstName));
+    }
+
+    if (string.IsNullOrWhiteSpace(lastName))
+    {
+      throw new ArgumentException("Last name cannot be empty.", nameof(lastName));
+    }
+
+    if (string.IsNullOrWhiteSpace(email))
+    {
+      throw new ArgumentException("Email cannot be empty.", nameof(email));
+    }
+
+    if (!IsValidEmail(email))
+    {
+      throw new ArgumentException("Invalid email format.", nameof(email));
+    }
+
+    if (!Enum.IsDefined(typeof(UserRole), role))
+    {
+      throw new ArgumentException("Invalid user role.", nameof(role));
+    }
+
     this.Id = id;
     this.FirstName = firstName;
     this.LastName = lastName;
@@ -29,4 +56,13 @@ public class User
   {
     return new User(id, firstName, lastName, email, role);
   }
+
+  private static bool IsValidEmail(string email)
+  {
+    var emailRegex = EmailRegex();
+    return emailRegex.IsMatch(email);
+  }
+
+  [GeneratedRegex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$")]
+  private static partial Regex EmailRegex();
 }

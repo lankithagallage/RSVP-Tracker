@@ -11,6 +11,16 @@ public class Attendee
 
   private Attendee(Guid id, Event @event, User user)
   {
+    if (@event == null)
+    {
+      throw new ArgumentNullException(nameof(@event), "Event cannot be null.");
+    }
+
+    if (user == null)
+    {
+      throw new ArgumentNullException(nameof(user), "User cannot be null.");
+    }
+
     this.Id = id;
     this.Event = @event;
     this.User = user;
@@ -31,7 +41,7 @@ public class Attendee
     return new Attendee(id, @event, user);
   }
 
-  public Attendee CreateNew(Event @event, User user)
+  public static Attendee CreateNew(Event @event, User user)
   {
     return new Attendee(Guid.NewGuid(), @event, user);
   }
