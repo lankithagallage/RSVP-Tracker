@@ -24,7 +24,7 @@ public class UserSeeder(RsvpContext context, IJsonFileReader jsonReader, ILogger
       {
         context.Users.Add(newUser);
       }
-      // @formatter:on
+    // @formatter:on
 
     context.SaveChanges();
     logger.LogInformation("Seeded users.");
