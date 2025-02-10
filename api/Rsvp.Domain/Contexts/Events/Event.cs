@@ -8,9 +8,9 @@ public class Event
 
   protected Event() { }
 
-  private Event(string title, string description, DateTime startTime, DateTime endTime)
+  private Event(Guid id, string title, string description, DateTime startTime, DateTime endTime)
   {
-    this.Id = Guid.NewGuid();
+    this.Id = id;
     this.Title = title;
     this.Description = description;
     this.StartTime = startTime;
@@ -25,9 +25,14 @@ public class Event
 
   public IReadOnlyCollection<Attendee> Attendees => this.attendees.AsReadOnly();
 
+  public static Event CreateNew(Guid id, string title, string description, DateTime startTime, DateTime endTime)
+  {
+    return new Event(id, title, description, startTime, endTime);
+  }
+
   public static Event CreateNew(string title, string description, DateTime startTime, DateTime endTime)
   {
-    return new Event(title, description, startTime, endTime);
+    return new Event(Guid.NewGuid(), title, description, startTime, endTime);
   }
 
   public void AddAttendee(Attendee attendee)

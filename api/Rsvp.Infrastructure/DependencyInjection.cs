@@ -5,12 +5,19 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 using Rsvp.Infrastructure.Persistence;
+using Rsvp.Infrastructure.Persistence.SeedData;
+using Rsvp.Infrastructure.Persistence.SeedData.Seeders;
 
 public static class DependencyInjection
 {
   public static void AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration,
     bool isDevelopment)
   {
+    services.AddScoped<ISeeder, EventSeeder>();
+    services.AddScoped<ISeeder, UserSeeder>();
+    services.AddScoped<ISeeder, AttendeeSeeder>();
+    services.AddScoped<DatabaseInitializer>();
+
     services.AddDbContext<RsvpContext>(options =>
     {
       options.UseSqlServer(configuration.GetConnectionString("RsvpSqlDbConnection"),
@@ -24,5 +31,12 @@ public static class DependencyInjection
         options.EnableSensitiveDataLogging();
       }
     });
+  }
+
+  public static void AddSeeding(this IServiceProvider serviceProvider)
+  {
+    using var scope = serviceProvider.CreateScope();
+    var initializer = scope.ServiceProvider.GetRequiredService<DatabaseInitializer>();
+    initializer.Initialize();
   }
 }

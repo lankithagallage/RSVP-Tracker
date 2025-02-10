@@ -17,6 +17,7 @@ public static class DependencyInjection
     {
       application.UseSwagger();
       application.UseSwaggerUI();
+      application.Services.AddSeeding();
     }
 
     application.UseExceptionHandler();
