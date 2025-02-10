@@ -1,0 +1,57 @@
+name: Angular Build & Tests
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - "**"
+
+jobs:
+  build:
+    name: Angular Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: app
+    strategy:
+      matrix:
+        node-version: [22]
+
+    steps:
+      - name: Checkout the source code
+        uses: actions/checkout@v4
+
+      - name: Set up Path Filters
+        id: filter
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            app:
+              - 'app/**'
+
+      # Early Exit if No Changes in APP Directory
+      - name: Skip Workflow (No APP Changes)
+        if: steps.filter.outputs.app != 'true'
+        run: |
+          echo "No changes in 'app/'. Skipping workflow."
+          exit 0
+
+      - name: Setup Node.js 22
+        if: steps.filter.outputs.app == 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "npm"
+          cache-dependency-path: package-lock.json
+
+      - name: Install dependencies
+        if: steps.filter.outputs.app == 'true'
+        run: npm ci
+
+      - name: Run tests
+        if: steps.filter.outputs.app == 'true'
+        run: npm run test:ci
+
+      - name: Build
+        if: steps.filter.outputs.app == 'true'
+        run: npm run build
