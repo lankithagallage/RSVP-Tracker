@@ -69,4 +69,14 @@ public class Event
 
     this.attendees.Add(attendee);
   }
+
+  public void UpdateTitle(string title)
+  {
+    if (string.IsNullOrWhiteSpace(title))
+    {
+      throw new ArgumentException("Title cannot be empty.", nameof(title));
+    }
+
+    this.Title = title;
+  }
 }

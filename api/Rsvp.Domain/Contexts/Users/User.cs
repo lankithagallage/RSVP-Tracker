@@ -41,7 +41,7 @@ public partial class User
   }
 
   public Guid Id { get; private set; }
-  public string FirstName { get; }
+  public string FirstName { get; private set; }
   public string LastName { get; }
   public string FullName => $"{this.FirstName} {this.LastName}";
   public string Email { get; private set; }
@@ -65,4 +65,14 @@ public partial class User
 
   [GeneratedRegex(@"^[^@\s]+@[^@\s]+\.[^@\s]+$")]
   private static partial Regex EmailRegex();
+
+  public void UpdateFirstName(string firstName)
+  {
+    if (string.IsNullOrWhiteSpace(firstName))
+    {
+      throw new ArgumentException("First name cannot be empty.", nameof(firstName));
+    }
+
+    this.FirstName = firstName;
+  }
 }
