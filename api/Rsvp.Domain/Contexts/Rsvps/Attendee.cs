@@ -9,13 +9,14 @@ public class Attendee
 
   private Attendee() { }
 
-  private Attendee(Event @event, User user)
+  private Attendee(Guid id, Event @event, User user, DateTimeOffset createdAt, DateTimeOffset modifiedAt)
   {
-    this.Id = Guid.NewGuid();
+    this.Id = id;
     this.Event = @event;
     this.User = user;
     this.Status = RsvpStatus.Pending;
-    this.CreatedAt = this.timeProvider.GetUtcNow();
+    this.CreatedAt = createdAt;
+    this.ModifiedAt = modifiedAt;
   }
 
   public Guid Id { get; private set; }
@@ -25,9 +26,15 @@ public class Attendee
   public DateTimeOffset CreatedAt { get; private set; }
   public DateTimeOffset ModifiedAt { get; private set; }
 
-  public static Attendee CreateNew(Event @event, User user)
+  public static Attendee CreateNew(Guid id, Event @event, User user, DateTimeOffset createdAt,
+    DateTimeOffset modifiedAt)
   {
-    return new Attendee(@event, user);
+    return new Attendee(id, @event, user, createdAt, modifiedAt);
+  }
+
+  public Attendee CreateNew(Event @event, User user)
+  {
+    return new Attendee(Guid.NewGuid(), @event, user, this.timeProvider.GetUtcNow(), this.timeProvider.GetUtcNow());
   }
 
   public void Confirm()
@@ -39,5 +46,6 @@ public class Attendee
   public void Cancel()
   {
     this.Status = RsvpStatus.Cancelled;
+    this.ModifiedAt = this.timeProvider.GetUtcNow();
   }
 }
