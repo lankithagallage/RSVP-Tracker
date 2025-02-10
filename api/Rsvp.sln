@@ -24,6 +24,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Unit.Tests", "Unit.Tests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rsvp.Integration.Tests", "Rsvp.Integration.Tests\Rsvp.Integration.Tests.csproj", "{2CE00C76-1344-44F1-8553-95075557D133}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rsvp.Tests.Shared", "Rsvp.Tests.Shared\Rsvp.Tests.Shared.csproj", "{A02F2A80-A667-4854-9B7A-40452848A79B}"
+EndProject
 Global
   GlobalSection(SolutionConfigurationPlatforms) = preSolution
     Debug|Any CPU = Debug|Any CPU
@@ -66,6 +68,10 @@ Global
     {2CE00C76-1344-44F1-8553-95075557D133}.Debug|Any CPU.Build.0 = Debug|Any CPU
     {2CE00C76-1344-44F1-8553-95075557D133}.Release|Any CPU.ActiveCfg = Release|Any CPU
     {2CE00C76-1344-44F1-8553-95075557D133}.Release|Any CPU.Build.0 = Release|Any CPU
+    {A02F2A80-A667-4854-9B7A-40452848A79B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+    {A02F2A80-A667-4854-9B7A-40452848A79B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+    {A02F2A80-A667-4854-9B7A-40452848A79B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+    {A02F2A80-A667-4854-9B7A-40452848A79B}.Release|Any CPU.Build.0 = Release|Any CPU
   EndGlobalSection
   GlobalSection(NestedProjects) = preSolution
     {10830B74-6D91-46EC-BC9C-25FBDB65E308} = {BDC79608-E18A-4335-A8F2-8E8421A090CC}
@@ -75,5 +81,6 @@ Global
     {D1A2D46F-77DC-4CB5-924F-2BC4C68D71D0} = {0BE9AD28-A1AD-4691-91C3-0BCB94B06371}
     {0DE58EA8-C7F5-45E7-B272-70D653B13D5E} = {0BE9AD28-A1AD-4691-91C3-0BCB94B06371}
     {2CE00C76-1344-44F1-8553-95075557D133} = {10830B74-6D91-46EC-BC9C-25FBDB65E308}
+    {A02F2A80-A667-4854-9B7A-40452848A79B} = {0BE9AD28-A1AD-4691-91C3-0BCB94B06371}
   EndGlobalSection
 EndGlobal

@@ -1,0 +1,72 @@
+﻿[
+  {
+    "Id": "e419ee0a-7504-4062-a8f4-ee3330b597d0",
+    "FirstName": "RepoUserFirst1",
+    "LastName": "RepoUserLast1",
+    "Email": "repouser1@example.com",
+    "Role": "Attendee"
+  },
+  {
+    "Id": "889be562-ea5a-4eba-97c6-ce0a4e91f214",
+    "FirstName": "RepoUserFirst2",
+    "LastName": "RepoUserLast2",
+    "Email": "repouser2@example.com",
+    "Role": "Organizer"
+  },
+  {
+    "Id": "d7a8a221-6979-4c0e-881d-3e2798bab1b9",
+    "FirstName": "RepoUserFirst3",
+    "LastName": "RepoUserLast3",
+    "Email": "repouser3@example.com",
+    "Role": "Admin"
+  },
+  {
+    "Id": "a725b794-f754-4f5b-a62c-62fe07736183",
+    "FirstName": "RepoUserFirst4",
+    "LastName": "RepoUserLast4",
+    "Email": "repouser4@example.com",
+    "Role": "Attendee"
+  },
+  {
+    "Id": "b92bdc5e-5bd4-4b03-ad61-87c722f5aac9",
+    "FirstName": "RepoUserFirst5",
+    "LastName": "RepoUserLast5",
+    "Email": "repouser5@example.com",
+    "Role": "Organizer"
+  },
+  {
+    "Id": "b1345f92-3332-4c45-87eb-5b48f00e5c70",
+    "FirstName": "RepoUserFirst6",
+    "LastName": "RepoUserLast6",
+    "Email": "repouser6@example.com",
+    "Role": "Admin"
+  },
+  {
+    "Id": "8a8b9622-9d78-49e0-a94d-955ecaa2e087",
+    "FirstName": "RepoUserFirst7",
+    "LastName": "RepoUserLast7",
+    "Email": "repouser7@example.com",
+    "Role": "Attendee"
+  },
+  {
+    "Id": "41639081-e0ce-4a06-94cf-0e17ebbcb09f",
+    "FirstName": "RepoUserFirst8",
+    "LastName": "RepoUserLast8",
+    "Email": "repouser8@example.com",
+    "Role": "Organizer"
+  },
+  {
+    "Id": "9b4eab0a-41c7-4866-aebc-f11a57ed97c7",
+    "FirstName": "RepoUserFirst9",
+    "LastName": "RepoUserLast9",
+    "Email": "repouser9@example.com",
+    "Role": "Admin"
+  },
+  {
+    "Id": "5f1efd7a-9003-4ff1-8b08-f57a5f1b808d",
+    "FirstName": "RepoUserFirst10",
+    "LastName": "RepoUserLast10",
+    "Email": "repouser10@example.com",
+    "Role": "Attendee"
+  }
+]

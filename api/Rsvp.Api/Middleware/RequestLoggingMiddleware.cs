@@ -1,7 +1,5 @@
 ﻿namespace Rsvp.Api.Middleware;
 
-using System.Text;
-
 public class RequestLoggingMiddleware(RequestDelegate next, ILogger<RequestLoggingMiddleware> logger)
 {
   public async Task Invoke(HttpContext context)
