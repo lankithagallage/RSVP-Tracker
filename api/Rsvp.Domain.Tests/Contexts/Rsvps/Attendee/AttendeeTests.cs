@@ -19,7 +19,7 @@ public class AttendeeTests
     return attendees.Select(a => new object[]
     {
       events.FirstOrDefault(e => e.Id == a.EventId),
-      users.FirstOrDefault(u => u.Id == a.UserId)
+      users.FirstOrDefault(u => u.Id == a.UserId),
     });
   }
 

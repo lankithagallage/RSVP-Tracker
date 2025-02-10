@@ -20,7 +20,7 @@ public class EventSeeder(RsvpContext context, IJsonFileReader jsonReader, ILogge
 
     // @formatter:off
     foreach (var newEvent in events.Select(e =>
-               Event.CreateNew(e.Id, e.Title, e.Description, e.StartTime, e.EndTime)))
+                Event.CreateNew(e.Id, e.Title, e.Description, e.StartTime, e.EndTime)))
     {
       context.Events.Add(newEvent);
     }

@@ -62,7 +62,8 @@ public class EventTests
   public void Event_CreateNew_ShouldThrowIfStartTimeIsPast(EventJson @event)
   {
     var pastStartTime = DateTime.UtcNow.AddDays(-1);
-    Assert.Throws<ArgumentException>(() => Event.CreateNew(@event.Title, @event.Description, pastStartTime, @event.EndTime));
+    Assert.Throws<ArgumentException>(() =>
+      Event.CreateNew(@event.Title, @event.Description, pastStartTime, @event.EndTime));
   }
 
   [Theory]
@@ -94,7 +95,8 @@ public class EventTests
   [Fact]
   public void Event_AddAttendee_ShouldThrowIfAttendeeIsNull()
   {
-    var newEvent = Event.CreateNew("Test Event", "Test Description", DateTime.UtcNow.AddHours(1), DateTime.UtcNow.AddHours(2));
+    var newEvent = Event.CreateNew("Test Event", "Test Description", DateTime.UtcNow.AddHours(1),
+      DateTime.UtcNow.AddHours(2));
     Assert.Throws<ArgumentNullException>(() => newEvent.AddAttendee(null));
   }
 }
