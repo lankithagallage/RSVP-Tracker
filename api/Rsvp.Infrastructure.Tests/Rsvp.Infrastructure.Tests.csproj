@@ -23,6 +23,32 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Rsvp.Infrastructure\Rsvp.Infrastructure.csproj" />
+    <ProjectReference Include="..\Rsvp.Tests.Shared\Rsvp.Tests.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Tests\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Tests\Persistence\Repositories\Events\EventRepositories\valid_events.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Tests\Persistence\Repositories\Rsvps\AttendeeRepository\valid_events.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Tests\Persistence\Repositories\Rsvps\AttendeeRepository\valid_users.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Tests\Persistence\Repositories\Rsvps\AttendeeRepository\valid_attendees.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Tests\Persistence\Repositories\Events\EventRepository\valid_events.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Tests\Persistence\Repositories\Users\UserRepository\valid_users.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
