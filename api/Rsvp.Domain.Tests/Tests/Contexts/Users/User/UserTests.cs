@@ -1,4 +1,4 @@
-﻿namespace Rsvp.Domain.Tests.Contexts.Users.User;
+﻿namespace Rsvp.Domain.Tests.Tests.Contexts.Users.User;
 
 using Rsvp.Domain.Contexts.Users;
 using Rsvp.Domain.Interfaces;
@@ -7,7 +7,7 @@ using Rsvp.Tests.Shared.JsonObjects;
 public class UserTests
 {
   private static readonly IJsonFileReader JsonFileReader =
-    new DomainJsonFileReader(Path.Combine("Contexts", "Users", "User"));
+    new DomainJsonFileReader(Path.Combine("Tests", "Contexts", "Users", "User"));
 
   public static IEnumerable<object[]> GetUserTestData()
   {

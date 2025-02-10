@@ -1,4 +1,4 @@
-﻿namespace Rsvp.Domain.Tests.Contexts.Events.Event;
+﻿namespace Rsvp.Domain.Tests.Tests.Contexts.Events.Event;
 
 using Rsvp.Domain.Contexts.Events;
 using Rsvp.Domain.Contexts.Rsvps;
@@ -9,7 +9,7 @@ using Rsvp.Tests.Shared.JsonObjects;
 public class EventTests
 {
   private static readonly IJsonFileReader JsonFileReader =
-    new DomainJsonFileReader(Path.Combine("Contexts", "Events", "Event"));
+    new DomainJsonFileReader(Path.Combine("Tests", "Contexts", "Events", "Event"));
 
   public static IEnumerable<object[]> GetEventTestData()
   {
