@@ -4,7 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+using Rsvp.Domain.Contexts.Events;
+using Rsvp.Domain.Contexts.Rsvps;
+using Rsvp.Domain.Contexts.Users;
 using Rsvp.Infrastructure.Persistence;
+using Rsvp.Infrastructure.Persistence.Repositories.Events;
+using Rsvp.Infrastructure.Persistence.Repositories.Rsvps;
+using Rsvp.Infrastructure.Persistence.Repositories.Users;
 using Rsvp.Infrastructure.Persistence.SeedData;
 using Rsvp.Infrastructure.Persistence.SeedData.Seeders;
 
@@ -17,6 +23,10 @@ public static class DependencyInjection
     services.AddScoped<ISeeder, UserSeeder>();
     services.AddScoped<ISeeder, AttendeeSeeder>();
     services.AddScoped<DatabaseInitializer>();
+
+    services.AddScoped<IEventRepository, EventRepository>();
+    services.AddScoped<IUserRepository, UserRepository>();
+    services.AddScoped<IAttendeeRepository, AttendeeRepository>();
 
     services.AddDbContext<RsvpContext>(options =>
     {
