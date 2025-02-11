@@ -1,0 +1,24 @@
+<div class="flex flex-col h-screen w-full">
+  <!-- Navbar -->
+  <nav
+    class="bg-blue-600 text-white py-4 px-6 flex justify-between items-center shadow-md w-full"
+  >
+    <div class="text-xl font-semibold">RSVP Tracker</div>
+    <div>
+      <a routerLink="/" class="px-3 hover:underline">Home</a>
+      <a routerLink="/events" class="px-3 hover:underline">Events</a>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="flex-grow flex items-center justify-center w-full">
+    <div class="w-full max-w-4xl">
+      <router-outlet />
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white text-center py-3 w-full">
+    © 2025 RSVP Tracker - All Rights Reserved
+  </footer>
+</div>
