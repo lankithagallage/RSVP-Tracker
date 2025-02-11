@@ -1,0 +1,74 @@
+{
+  "events": [
+    {
+      "id": 1,
+      "name": "Tech Conference 2025",
+      "date": "2025-03-10",
+      "location": "New York, NY",
+      "description": "Biggest tech event of the year with top industry leaders."
+    },
+    {
+      "id": 2,
+      "name": "AI Summit",
+      "date": "2025-05-15",
+      "location": "San Francisco, CA",
+      "description": "Explore the latest advancements in AI and machine learning."
+    },
+    {
+      "id": 3,
+      "name": "Cybersecurity Expo",
+      "date": "2025-08-22",
+      "location": "Los Angeles, CA",
+      "description": "Learn how to protect digital assets from top cybersecurity experts."
+    },
+    {
+      "id": 4,
+      "name": "Blockchain Conference",
+      "date": "2025-10-15",
+      "location": "Miami, FL",
+      "description": "Discover how blockchain is transforming industries."
+    },
+    {
+      "id": 5,
+      "name": "Women in Tech Summit",
+      "date": "2025-11-05",
+      "location": "Seattle, WA",
+      "description": "Celebrating and empowering women in technology."
+    },
+    {
+      "id": 6,
+      "name": "Digital Marketing Expo",
+      "date": "2025-12-01",
+      "location": "Chicago, IL",
+      "description": "Learn marketing strategies from global experts."
+    },
+    {
+      "id": 7,
+      "name": "E-Commerce Forum",
+      "date": "2026-01-20",
+      "location": "Las Vegas, NV",
+      "description": "Discuss innovations in online retail and sales strategies."
+    },
+    {
+      "id": 8,
+      "name": "Startup Pitch Night",
+      "date": "2026-03-05",
+      "location": "Austin, TX",
+      "description": "Network with investors and showcase your startup."
+    },
+    {
+      "id": 9,
+      "name": "Health & Wellness Retreat",
+      "date": "2026-04-18",
+      "location": "Denver, CO",
+      "description": "Discover holistic health practices and mindfulness."
+    },
+    {
+      "id": 10,
+      "name": "SaaS Growth Conference",
+      "date": "2026-06-10",
+      "location": "Boston, MA",
+      "description": "Scaling strategies for SaaS businesses."
+    }
+  ]
+}

@@ -33,30 +33,17 @@
 
     <!-- Event Card -->
     <div
-      class="bg-white shadow-md rounded-lg p-5 flex justify-between items-center"
+      *ngFor="let event of upcomingEvents"
+      class="bg-white shadow-md rounded-lg p-5 my-4 flex justify-between items-center"
     >
       <div>
-        <h4 class="text-lg font-bold text-gray-900">Tech Conference 2025</h4>
-        <p class="text-gray-600">📅 March 10, 2025</p>
+        <h4 class="text-lg font-bold text-gray-900">{{ event.name }}</h4>
+        <p class="text-gray-600">
+          📅 {{ event.date }} - 📍 {{ event.location }}
+        </p>
       </div>
       <a
-        routerLink="/events/1"
-        class="text-blue-600 font-medium hover:underline"
-        >View Details →</a
-      >
-    </div>
-
-    <div
-      class="bg-white shadow-md rounded-lg p-5 flex justify-between items-center mt-4"
-    >
-      <div>
-        <h4 class="text-lg font-bold text-gray-900">
-          Startup Networking Meetup
-        </h4>
-        <p class="text-gray-600">📅 April 5, 2025</p>
-      </div>
-      <a
-        routerLink="/events/2"
+        routerLink="/events/{{ event.id }}"
         class="text-blue-600 font-medium hover:underline"
         >View Details →</a
       >

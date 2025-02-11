@@ -31,91 +31,18 @@
   <section
     class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl"
   >
-    <!-- Event Card 1 -->
-    <div class="bg-white shadow-md rounded-lg p-5 flex flex-col">
-      <h4 class="text-lg font-bold text-gray-900">Tech Conference 2025</h4>
-      <p class="text-gray-600">📅 March 10, 2025</p>
+    <!-- Event Card -->
+    <div
+      *ngFor="let event of events"
+      class="bg-white shadow-md rounded-lg p-5 flex flex-col"
+    >
+      <h4 class="text-lg font-bold text-gray-900">{{ event.name }}</h4>
+      <p class="text-gray-600">📅 {{ event.date }} - 📍 {{ event.location }}</p>
       <p class="text-gray-500 text-sm mt-2 pb-10">
-        Join the biggest tech event of the year, featuring keynote speakers from
-        top companies.
+        {{ event.description }}
       </p>
       <a
-        routerLink="/events/1"
-        class="mt-auto bg-blue-600 hover:bg-blue-700 text-white text-center py-2 px-4 rounded-lg shadow-md transition-all"
-      >
-        Register Now
-      </a>
-    </div>
-
-    <!-- Event Card 2 -->
-    <div class="bg-white shadow-md rounded-lg p-5 flex flex-col">
-      <h4 class="text-lg font-bold text-gray-900">Startup Networking Meetup</h4>
-      <p class="text-gray-600">📅 April 5, 2025</p>
-      <p class="text-gray-500 text-sm mt-2 pb-10">
-        Meet and connect with like-minded entrepreneurs and investors.
-      </p>
-      <a
-        routerLink="/events/2"
-        class="mt-auto bg-blue-600 hover:bg-blue-700 text-white text-center py-2 px-4 rounded-lg shadow-md transition-all"
-      >
-        Register Now
-      </a>
-    </div>
-
-    <!-- Event Card 3 -->
-    <div class="bg-white shadow-md rounded-lg p-5 flex flex-col">
-      <h4 class="text-lg font-bold text-gray-900">AI & Robotics Summit</h4>
-      <p class="text-gray-600">📅 June 12, 2025</p>
-      <p class="text-gray-500 text-sm mt-2 pb-10">
-        Explore the latest advancements in AI and robotics with top experts.
-      </p>
-      <a
-        routerLink="/events/3"
-        class="mt-auto bg-blue-600 hover:bg-blue-700 text-white text-center py-2 px-4 rounded-lg shadow-md transition-all"
-      >
-        Register Now
-      </a>
-    </div>
-
-    <!-- Event Card 4 -->
-    <div class="bg-white shadow-md rounded-lg p-5 flex flex-col">
-      <h4 class="text-lg font-bold text-gray-900">Cybersecurity Expo</h4>
-      <p class="text-gray-600">📅 August 22, 2025</p>
-      <p class="text-gray-500 text-sm mt-2 pb-10">
-        Learn from cybersecurity leaders on how to protect your digital assets.
-      </p>
-      <a
-        routerLink="/events/4"
-        class="mt-auto bg-blue-600 hover:bg-blue-700 text-white text-center py-2 px-4 rounded-lg shadow-md transition-all"
-      >
-        Register Now
-      </a>
-    </div>
-
-    <!-- Event Card 5 -->
-    <div class="bg-white shadow-md rounded-lg p-5 flex flex-col">
-      <h4 class="text-lg font-bold text-gray-900">Blockchain Conference</h4>
-      <p class="text-gray-600">📅 October 15, 2025</p>
-      <p class="text-gray-500 text-sm mt-2 pb-10">
-        Discover how blockchain is transforming industries.
-      </p>
-      <a
-        routerLink="/events/5"
-        class="mt-auto bg-blue-600 hover:bg-blue-700 text-white text-center py-2 px-4 rounded-lg shadow-md transition-all"
-      >
-        Register Now
-      </a>
-    </div>
-
-    <!-- Event Card 6 -->
-    <div class="bg-white shadow-md rounded-lg p-5 flex flex-col">
-      <h4 class="text-lg font-bold text-gray-900">Women in Tech Summit</h4>
-      <p class="text-gray-600">📅 November 5, 2025</p>
-      <p class="text-gray-500 text-sm mt-2 pb-10">
-        Celebrating and empowering women in technology.
-      </p>
-      <a
-        routerLink="/events/6"
+        routerLink="/events/{{ event.id }}"
         class="mt-auto bg-blue-600 hover:bg-blue-700 text-white text-center py-2 px-4 rounded-lg shadow-md transition-all"
       >
         Register Now

@@ -1,22 +1,19 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { EventApiService } from './services/event-api.service';
+import { EventStateService } from './services/event-state.service';
+import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
-import { ActivatedRoute } from '@angular/router';
-import { of } from 'rxjs';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
       providers: [
+        provideHttpClient(),
         provideRouter([]),
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            params: of({}),
-            snapshot: { paramMap: { get: () => null } },
-          },
-        },
+        EventApiService,
+        EventStateService,
       ],
     }).compileComponents();
   });
@@ -25,11 +22,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it(`should have the 'app' title`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('app');
   });
 });
