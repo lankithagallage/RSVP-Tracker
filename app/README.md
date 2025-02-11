@@ -54,6 +54,30 @@ ng e2e
 
 Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-## Additional Resources
+## **Using `db.json` for Mock API Testing**
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+To simulate a REST API for testing, we use `json-server` with `db.json`.
+
+#### **Install `json-server`**
+
+```sh
+npm install -g json-server
+```
+
+#### **Start the Mock API Server**
+
+```sh
+json-server --watch db.json --port 3000
+```
+
+This will host the API at `http://localhost:3000`.
+
+#### **API Endpoints**
+
+| Method  | Endpoint  | Description    |
+| ------- | --------- | -------------- |
+| **GET** | `/events` | Get all events |
+
+#### **4️ Stop the Server**
+
+Press `CTRL + C` to stop the server.
