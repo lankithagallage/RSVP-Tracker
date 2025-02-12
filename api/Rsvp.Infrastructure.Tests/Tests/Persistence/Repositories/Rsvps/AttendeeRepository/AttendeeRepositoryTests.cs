@@ -26,19 +26,32 @@ public class AttendeeRepositoryTests : IClassFixture<DatabaseFixture>
   {
     var attendees = JsonFileReader.LoadData<AttendeeJson>("valid_attendees.json");
     var events = JsonFileReader.LoadData<EventJson>("valid_events.json");
+    var organizers = JsonFileReader.LoadData<UserJson>("valid_organizers.json");
     var users = JsonFileReader.LoadData<UserJson>("valid_users.json");
-    return attendees.Select(a => new object[]
+
+    return attendees.Select(a =>
     {
-      events.FirstOrDefault(e => e.Id == a.EventId),
-      users.FirstOrDefault(u => u.Id == a.UserId),
+      var eventItem = events.FirstOrDefault(e => e.Id == a.EventId);
+      var organizer = organizers.FirstOrDefault(o => o.Id == eventItem?.OrganizerId);
+      var user = users.FirstOrDefault(u => u.Id == a.UserId);
+
+      return new object[]
+      {
+        eventItem,
+        organizer,
+        user
+      };
     });
   }
 
   [Theory]
   [MemberData(nameof(GetAttendeeTestData))]
-  public async Task AttendeeRepository_CanAddAttendee(EventJson eventJson, UserJson userJson)
+  public async Task AttendeeRepository_CanAddAttendee(EventJson eventJson, UserJson organizer, UserJson userJson)
   {
-    var newEvent = Event.CreateNew(eventJson.Title, eventJson.Description, eventJson.StartTime, eventJson.EndTime);
+    var newOrganizer = User.CreateNew(organizer.FirstName, organizer.LastName, organizer.Email,
+      Enum.Parse<UserRole>(organizer.Role));
+    var newEvent = Event.CreateNew(eventJson.Title, eventJson.Description, eventJson.Location, eventJson.StartTime,
+      eventJson.EndTime, newOrganizer);
     var newUser = User.CreateNew(userJson.FirstName, userJson.LastName, userJson.Email,
       Enum.Parse<UserRole>(userJson.Role));
     var newAttendee = Attendee.CreateNew(newEvent, newUser);
@@ -52,9 +65,12 @@ public class AttendeeRepositoryTests : IClassFixture<DatabaseFixture>
 
   [Theory]
   [MemberData(nameof(GetAttendeeTestData))]
-  public async Task AttendeeRepository_CanUpdateAttendee(EventJson eventJson, UserJson userJson)
+  public async Task AttendeeRepository_CanUpdateAttendee(EventJson eventJson, UserJson organizer, UserJson userJson)
   {
-    var newEvent = Event.CreateNew(eventJson.Title, eventJson.Description, eventJson.StartTime, eventJson.EndTime);
+    var newOrganizer = User.CreateNew(organizer.FirstName, organizer.LastName, organizer.Email,
+      Enum.Parse<UserRole>(organizer.Role));
+    var newEvent = Event.CreateNew(eventJson.Title, eventJson.Description, eventJson.Location, eventJson.StartTime,
+      eventJson.EndTime, newOrganizer);
     var newUser = User.CreateNew(userJson.FirstName, userJson.LastName, userJson.Email,
       Enum.Parse<UserRole>(userJson.Role));
     var newAttendee = Attendee.CreateNew(newEvent, newUser);
@@ -71,9 +87,12 @@ public class AttendeeRepositoryTests : IClassFixture<DatabaseFixture>
 
   [Theory]
   [MemberData(nameof(GetAttendeeTestData))]
-  public async Task AttendeeRepository_CanDeleteAttendee(EventJson eventJson, UserJson userJson)
+  public async Task AttendeeRepository_CanDeleteAttendee(EventJson eventJson, UserJson organizer, UserJson userJson)
   {
-    var newEvent = Event.CreateNew(eventJson.Title, eventJson.Description, eventJson.StartTime, eventJson.EndTime);
+    var newOrganizer = User.CreateNew(organizer.FirstName, organizer.LastName, organizer.Email,
+      Enum.Parse<UserRole>(organizer.Role));
+    var newEvent = Event.CreateNew(eventJson.Title, eventJson.Description, eventJson.Location, eventJson.StartTime,
+      eventJson.EndTime, newOrganizer);
     var newUser = User.CreateNew(userJson.FirstName, userJson.LastName, userJson.Email,
       Enum.Parse<UserRole>(userJson.Role));
     var newAttendee = Attendee.CreateNew(newEvent, newUser);

@@ -1,10 +1,11 @@
 ﻿namespace Rsvp.Infrastructure.Tests.Tests.Persistence.Repositories.Events.EventRepository;
 
 using Rsvp.Domain.Contexts.Events;
+using Rsvp.Domain.Contexts.Users;
 using Rsvp.Domain.Interfaces;
 using Rsvp.Infrastructure.Persistence.Repositories.Events;
-using Rsvp.Infrastructure.Persistence.SeedData.Json;
 using Rsvp.Infrastructure.Tests.Fixtures;
+using Rsvp.Tests.Shared.JsonObjects;
 
 [Collection("Database collection")]
 public class EventRepositoryTests : IClassFixture<DatabaseFixture>
@@ -23,14 +24,18 @@ public class EventRepositoryTests : IClassFixture<DatabaseFixture>
   public static IEnumerable<object[]> GetEventTestData()
   {
     var events = JsonFileReader.LoadData<EventJson>("valid_events.json");
-    return events.Select(e => new object[] { e });
+    var organizers = JsonFileReader.LoadData<UserJson>("valid_organizers.json");
+    return events.SelectMany(e => organizers.Select(u => new object[] { e, u }));
   }
 
   [Theory]
   [MemberData(nameof(GetEventTestData))]
-  public async Task EventRepository_CanAddEvent(EventJson eventJson)
+  public async Task EventRepository_CanAddEvent(EventJson eventJson, UserJson organizer)
   {
-    var newEvent = Event.CreateNew(eventJson.Title, eventJson.Description, eventJson.StartTime, eventJson.EndTime);
+    var newOrganizer = User.CreateNew(organizer.FirstName, organizer.LastName, organizer.Email,
+      Enum.Parse<UserRole>(organizer.Role));
+    var newEvent = Event.CreateNew(eventJson.Title, eventJson.Description, eventJson.Location, eventJson.StartTime,
+      eventJson.EndTime, newOrganizer);
     await this.eventRepository.AddAsync(newEvent, CancellationToken.None);
 
     var fetchedEvent = await this.eventRepository.GetByIdAsync(newEvent.Id, CancellationToken.None);
@@ -40,9 +45,12 @@ public class EventRepositoryTests : IClassFixture<DatabaseFixture>
 
   [Theory]
   [MemberData(nameof(GetEventTestData))]
-  public async Task EventRepository_CanUpdateTitleEvent(EventJson eventJson)
+  public async Task EventRepository_CanUpdateTitleEvent(EventJson eventJson, UserJson organizer)
   {
-    var newEvent = Event.CreateNew(eventJson.Title, eventJson.Description, eventJson.StartTime, eventJson.EndTime);
+    var newOrganizer = User.CreateNew(organizer.FirstName, organizer.LastName, organizer.Email,
+      Enum.Parse<UserRole>(organizer.Role));
+    var newEvent = Event.CreateNew(eventJson.Title, eventJson.Description, eventJson.Location, eventJson.StartTime,
+      eventJson.EndTime, newOrganizer);
     await this.eventRepository.AddAsync(newEvent, CancellationToken.None);
 
     newEvent.UpdateTitle("Updated Title");
@@ -55,9 +63,12 @@ public class EventRepositoryTests : IClassFixture<DatabaseFixture>
 
   [Theory]
   [MemberData(nameof(GetEventTestData))]
-  public async Task EventRepository_CanDeleteEvent(EventJson eventJson)
+  public async Task EventRepository_CanDeleteEvent(EventJson eventJson, UserJson organizer)
   {
-    var newEvent = Event.CreateNew(eventJson.Title, eventJson.Description, eventJson.StartTime, eventJson.EndTime);
+    var newOrganizer = User.CreateNew(organizer.FirstName, organizer.LastName, organizer.Email,
+      Enum.Parse<UserRole>(organizer.Role));
+    var newEvent = Event.CreateNew(eventJson.Title, eventJson.Description, eventJson.Location, eventJson.StartTime,
+      eventJson.EndTime, newOrganizer);
     await this.eventRepository.AddAsync(newEvent, CancellationToken.None);
 
     await this.eventRepository.DeleteAsync(newEvent.Id, CancellationToken.None);
