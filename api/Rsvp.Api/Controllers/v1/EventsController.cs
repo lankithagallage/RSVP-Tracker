@@ -26,9 +26,20 @@ public class EventsController : ControllerBase
     this.controllerService = controllerService;
   }
 
+  /// <summary>
+  /// Search and retrieve paginated events.
+  /// </summary>
+  /// <param name="page">Page number to retrieve.</param>
+  /// <param name="size">Number of events per page.</param>
+  /// <param name="search">Search term for filtering event titles/descriptions.</param>
+  /// <param name="sort">Sorting field ("title" or "date").</param>
+  /// <param name="order">Sorting order ("asc" or "desc").</param>
+  /// <param name="cancellationToken">Cancellation token.</param>
+  /// <returns>Paginated result of events.</returns>
   [HttpGet("search")]
+  [ProducesResponseType(typeof(Result<PagedResult<List<EventDto>>>), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(Result<PagedResult<List<EventDto>>>), StatusCodes.Status400BadRequest)]
   [Produces(MediaTypeNames.Application.Json)]
-  [ExpectedFailures(ResultStatus.Error)]
   public async Task<Result<PagedResult<List<EventDto>>>> SearchEvents(
     [FromQuery] int page,
     [FromQuery] int size,
@@ -38,7 +49,6 @@ public class EventsController : ControllerBase
     CancellationToken cancellationToken = default)
   {
     var query = new GetPaginatedEventsQuery(page, size, search, sort, order);
-    return await controllerService.GetPaginatedEventsQueryAsync(query, cancellationToken);
+    return await this.controllerService.GetPaginatedEventsQueryAsync(query, cancellationToken);
   }
-
 }
