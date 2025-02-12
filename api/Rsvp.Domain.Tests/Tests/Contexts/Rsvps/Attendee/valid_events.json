@@ -3,90 +3,70 @@
     "Id": "01f8d11a-5516-435f-9307-985489c5ae8b",
     "Title": "Test Event 1",
     "Description": "Description for Test Event 1",
-    "Location": "Location for Test Event 1",
     "StartTime": "2125-02-10T14:19:33.255561Z",
-    "EndTime": "2125-02-10T17:19:33.255575Z",
-    "OrganizerId": "a2a97e8b-521d-4e75-86d0-af9de38f308e"
+    "EndTime": "2125-02-10T17:19:33.255575Z"
   },
   {
     "Id": "4c2cfff3-3a0e-470f-b11a-f03497abfa82",
     "Title": "Test Event 2",
     "Description": "Description for Test Event 2",
-    "Location": "Location for Test Event 2",
     "StartTime": "2125-02-11T14:19:33.256195Z",
-    "EndTime": "2125-02-11T17:19:33.256206Z",
-    "OrganizerId": "e28d1819-0041-47a7-9958-f36415f5be4a"
+    "EndTime": "2125-02-11T17:19:33.256206Z"
   },
   {
     "Id": "5b5d5add-f037-4547-bceb-460a86cf597f",
     "Title": "Test Event 3",
     "Description": "Description for Test Event 3",
-    "Location": "Location for Test Event 3",
     "StartTime": "2125-02-12T14:19:33.256356Z",
-    "EndTime": "2125-02-12T17:19:33.256362Z",
-    "OrganizerId": "a2a97e8b-521d-4e75-86d0-af9de38f308e"
+    "EndTime": "2125-02-12T17:19:33.256362Z"
   },
   {
     "Id": "3a1360e7-7788-4da9-aaae-0289d8c8dac8",
     "Title": "Test Event 4",
     "Description": "Description for Test Event 4",
-    "Location": "Location for Test Event 4",
     "StartTime": "2125-02-13T14:19:33.256620Z",
-    "EndTime": "2125-02-13T17:19:33.256636Z",
-    "OrganizerId": "e28d1819-0041-47a7-9958-f36415f5be4a"
+    "EndTime": "2125-02-13T17:19:33.256636Z"
   },
   {
     "Id": "4aac6e75-ad27-41c2-8636-58ec9d40308d",
     "Title": "Test Event 5",
     "Description": "Description for Test Event 5",
-    "Location": "Location for Test Event 5",
     "StartTime": "2125-02-14T14:19:33.256769Z",
-    "EndTime": "2125-02-14T17:19:33.256774Z",
-    "OrganizerId": "a2a97e8b-521d-4e75-86d0-af9de38f308e"
+    "EndTime": "2125-02-14T17:19:33.256774Z"
   },
   {
     "Id": "d42ec4e7-7729-4716-9c74-e97e9ba1fbc9",
     "Title": "Test Event 6",
     "Description": "Description for Test Event 6",
-    "Location": "Location for Test Event 6",
     "StartTime": "2125-02-15T14:19:33.257010Z",
-    "EndTime": "2125-02-15T17:19:33.257022Z",
-    "OrganizerId": "e28d1819-0041-47a7-9958-f36415f5be4a"
+    "EndTime": "2125-02-15T17:19:33.257022Z"
   },
   {
     "Id": "7d6fcc98-b0a2-4c66-a90b-ba54cb4c5272",
     "Title": "Test Event 7",
     "Description": "Description for Test Event 7",
-    "Location": "Location for Test Event 7",
     "StartTime": "2125-02-16T14:19:33.257072Z",
-    "EndTime": "2125-02-16T17:19:33.257078Z",
-    "OrganizerId": "a2a97e8b-521d-4e75-86d0-af9de38f308e"
+    "EndTime": "2125-02-16T17:19:33.257078Z"
   },
   {
     "Id": "820803bb-beec-404e-bbdf-b044b418503d",
     "Title": "Test Event 8",
     "Description": "Description for Test Event 8",
-    "Location": "Location for Test Event 8",
     "StartTime": "2125-02-17T14:19:33.257295Z",
-    "EndTime": "2125-02-17T17:19:33.257310Z",
-    "OrganizerId": "e28d1819-0041-47a7-9958-f36415f5be4a"
+    "EndTime": "2125-02-17T17:19:33.257310Z"
   },
   {
     "Id": "5cc637de-9663-428c-bf6f-ae4e8ae62071",
     "Title": "Test Event 9",
     "Description": "Description for Test Event 9",
-    "Location": "Location for Test Event 9",
     "StartTime": "2125-02-18T14:19:33.257587Z",
-    "EndTime": "2125-02-18T17:19:33.257596Z",
-    "OrganizerId": "a2a97e8b-521d-4e75-86d0-af9de38f308e"
+    "EndTime": "2125-02-18T17:19:33.257596Z"
   },
   {
     "Id": "7e288dfc-24b5-4560-a538-2a56401fcff9",
     "Title": "Test Event 10",
     "Description": "Description for Test Event 10",
-    "Location": "Location for Test Event 10",
     "StartTime": "2125-02-19T14:19:33.257680Z",
-    "EndTime": "2125-02-19T17:19:33.257685Z",
-    "OrganizerId": "e28d1819-0041-47a7-9958-f36415f5be4a"
+    "EndTime": "2125-02-19T17:19:33.257685Z"
   }
 ]

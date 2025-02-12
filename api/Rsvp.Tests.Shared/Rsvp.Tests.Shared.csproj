@@ -7,29 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Rsvp.Api\Rsvp.Api.csproj" />
     <ProjectReference Include="..\Rsvp.Domain\Rsvp.Domain.csproj" />
-    <ProjectReference Include="..\Rsvp.Infrastructure\Rsvp.Infrastructure.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.13" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.13" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.1" />
-    <PackageReference Include="Microsoft.TestPlatform.TestHost" Version="17.8.0" />
-    <PackageReference Include="xunit.extensibility.core" Version="2.5.3" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Fixtures\Database\SeedData\Json\test-attendees.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Fixtures\Database\SeedData\Json\test-events.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Fixtures\Database\SeedData\Json\test-users.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>

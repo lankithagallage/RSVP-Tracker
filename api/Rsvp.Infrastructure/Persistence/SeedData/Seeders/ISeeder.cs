@@ -2,6 +2,5 @@
 
 public interface ISeeder
 {
-  int Order { get; }
   void Seed();
 }

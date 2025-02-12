@@ -15,32 +15,19 @@ public class AttendeeTests
   {
     var attendees = JsonFileReader.LoadData<AttendeeJson>("valid_attendees.json");
     var events = JsonFileReader.LoadData<EventJson>("valid_events.json");
-    var organizers = JsonFileReader.LoadData<UserJson>("valid_organizers.json");
     var users = JsonFileReader.LoadData<UserJson>("valid_users.json");
-
-    return attendees.Select(a =>
+    return attendees.Select(a => new object[]
     {
-      var eventItem = events.FirstOrDefault(e => e.Id == a.EventId);
-      var organizer = organizers.FirstOrDefault(o => o.Id == eventItem?.OrganizerId);
-      var user = users.FirstOrDefault(u => u.Id == a.UserId);
-
-      return new object[]
-      {
-        eventItem,
-        organizer,
-        user,
-      };
+      events.FirstOrDefault(e => e.Id == a.EventId),
+      users.FirstOrDefault(u => u.Id == a.UserId),
     });
   }
 
   [Theory]
   [MemberData(nameof(GetAttendeeTestData))]
-  public void Attendee_CreateNew_CanCreateNewAttendee(EventJson eventJson, UserJson organizer, UserJson userJson)
+  public void Attendee_CreateNew_CanCreateNewAttendee(EventJson eventJson, UserJson userJson)
   {
-    var newOrganizer = User.CreateNew(organizer.FirstName, organizer.LastName, organizer.Email,
-      Enum.Parse<UserRole>(organizer.Role));
-    var newEvent = Event.CreateNew(eventJson.Title, eventJson.Description, eventJson.Location, eventJson.StartTime,
-      eventJson.EndTime, newOrganizer);
+    var newEvent = Event.CreateNew(eventJson.Title, eventJson.Description, eventJson.StartTime, eventJson.EndTime);
     var newUser = User.CreateNew(userJson.FirstName, userJson.LastName, userJson.Email,
       Enum.Parse<UserRole>(userJson.Role));
     var newAttendee = Attendee.CreateNew(newEvent, newUser);
@@ -52,7 +39,7 @@ public class AttendeeTests
 
   [Theory]
   [MemberData(nameof(GetAttendeeTestData))]
-  public void Attendee_CreateNew_ShouldThrowIfEventIsNull(EventJson eventJson, UserJson organizer, UserJson userJson)
+  public void Attendee_CreateNew_ShouldThrowIfEventIsNull(EventJson eventJson, UserJson userJson)
   {
     var newUser = User.CreateNew(userJson.FirstName, userJson.LastName, userJson.Email,
       Enum.Parse<UserRole>(userJson.Role));
@@ -61,23 +48,17 @@ public class AttendeeTests
 
   [Theory]
   [MemberData(nameof(GetAttendeeTestData))]
-  public void Attendee_CreateNew_ShouldThrowIfUserIsNull(EventJson eventJson, UserJson organizer, UserJson userJson)
+  public void Attendee_CreateNew_ShouldThrowIfUserIsNull(EventJson eventJson, UserJson userJson)
   {
-    var newOrganizer = User.CreateNew(organizer.FirstName, organizer.LastName, organizer.Email,
-      Enum.Parse<UserRole>(organizer.Role));
-    var newEvent = Event.CreateNew(eventJson.Title, eventJson.Description, eventJson.Location, eventJson.StartTime,
-      eventJson.EndTime, newOrganizer);
+    var newEvent = Event.CreateNew(eventJson.Title, eventJson.Description, eventJson.StartTime, eventJson.EndTime);
     Assert.Throws<ArgumentNullException>(() => Attendee.CreateNew(newEvent, null));
   }
 
   [Theory]
   [MemberData(nameof(GetAttendeeTestData))]
-  public void Attendee_Confirm_ShouldSetStatusToConfirmed(EventJson eventJson, UserJson organizer, UserJson userJson)
+  public void Attendee_Confirm_ShouldSetStatusToConfirmed(EventJson eventJson, UserJson userJson)
   {
-    var newOrganizer = User.CreateNew(organizer.FirstName, organizer.LastName, organizer.Email,
-      Enum.Parse<UserRole>(organizer.Role));
-    var newEvent = Event.CreateNew(eventJson.Title, eventJson.Description, eventJson.Location, eventJson.StartTime,
-      eventJson.EndTime, newOrganizer);
+    var newEvent = Event.CreateNew(eventJson.Title, eventJson.Description, eventJson.StartTime, eventJson.EndTime);
     var newUser = User.CreateNew(userJson.FirstName, userJson.LastName, userJson.Email,
       Enum.Parse<UserRole>(userJson.Role));
     var newAttendee = Attendee.CreateNew(newEvent, newUser);
@@ -88,12 +69,9 @@ public class AttendeeTests
 
   [Theory]
   [MemberData(nameof(GetAttendeeTestData))]
-  public void Attendee_Cancel_ShouldSetStatusToCancelled(EventJson eventJson, UserJson organizer, UserJson userJson)
+  public void Attendee_Cancel_ShouldSetStatusToCancelled(EventJson eventJson, UserJson userJson)
   {
-    var newOrganizer = User.CreateNew(organizer.FirstName, organizer.LastName, organizer.Email,
-      Enum.Parse<UserRole>(organizer.Role));
-    var newEvent = Event.CreateNew(eventJson.Title, eventJson.Description, eventJson.Location, eventJson.StartTime,
-      eventJson.EndTime, newOrganizer);
+    var newEvent = Event.CreateNew(eventJson.Title, eventJson.Description, eventJson.StartTime, eventJson.EndTime);
     var newUser = User.CreateNew(userJson.FirstName, userJson.LastName, userJson.Email,
       Enum.Parse<UserRole>(userJson.Role));
     var newAttendee = Attendee.CreateNew(newEvent, newUser);

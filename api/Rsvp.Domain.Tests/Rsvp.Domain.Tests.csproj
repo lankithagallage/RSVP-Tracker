@@ -62,12 +62,6 @@
     <None Update="Tests\Contexts\Users\User\valid_users.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Tests\Contexts\Rsvps\Attendee\valid_organizers.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Tests\Contexts\Events\Event\valid_organizers.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
   <ItemGroup>

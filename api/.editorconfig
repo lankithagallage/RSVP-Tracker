@@ -16,9 +16,6 @@ ij_html_space_inside_empty_tag = true
 max_line_length = off
 trim_trailing_whitespace = false
 
-[{*.json,*.csproj}]
-max_line_length = off
-
 [*.cs]
 resharper_csharp_braces_for_for = required
 resharper_csharp_braces_for_foreach = required

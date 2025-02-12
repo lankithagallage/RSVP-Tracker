@@ -49,12 +49,6 @@
     <None Update="Tests\Persistence\Repositories\Users\UserRepository\valid_users.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Tests\Persistence\Repositories\Events\EventRepository\valid_organizers.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Tests\Persistence\Repositories\Rsvps\AttendeeRepository\valid_organizers.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
