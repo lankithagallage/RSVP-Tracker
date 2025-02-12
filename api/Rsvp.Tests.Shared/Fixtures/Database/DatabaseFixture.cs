@@ -1,4 +1,4 @@
-﻿namespace Rsvp.Infrastructure.Tests.Fixtures;
+﻿namespace Rsvp.Tests.Shared.Fixtures.Database;
 
 using System.Reflection;
 
@@ -7,8 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 using Rsvp.Domain.Interfaces;
 using Rsvp.Infrastructure.Persistence;
-using Rsvp.Infrastructure.Persistence.SeedData;
-using Rsvp.Infrastructure.Persistence.SeedData.Seeders;
+using Rsvp.Tests.Shared.Fixtures.Database.SeedData;
+using Rsvp.Tests.Shared.Fixtures.Database.SeedData.Seeders;
 
 public class DatabaseFixture : IDisposable
 {
@@ -21,13 +21,13 @@ public class DatabaseFixture : IDisposable
 
     var assemblyPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? string.Empty;
     services.AddSingleton<IJsonFileReader>(
-      new JsonFileReader(Path.Combine(assemblyPath, "Persistence", "SeedData", "Json")));
+      new SharedJsonFileReader(Path.Combine(assemblyPath, "Fixtures", "Database", "SeedData", "Json")));
 
     services.AddDbContext<RsvpContext>(options =>
       options.UseInMemoryDatabase($"TestDatabase:{Guid.NewGuid()}"));
 
-    services.AddScoped<ISeeder, EventSeeder>();
     services.AddScoped<ISeeder, UserSeeder>();
+    services.AddScoped<ISeeder, EventSeeder>();
     services.AddScoped<ISeeder, AttendeeSeeder>();
     services.AddScoped<DatabaseInitializer>();
 
