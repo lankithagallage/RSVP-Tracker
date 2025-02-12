@@ -27,7 +27,7 @@ public class EventRepository(RsvpContext context) : Repository<Event>(context), 
 
     return await query
       .Skip((page - 1) * size)
-      .Take(size)
+      .Take(size).Include(e => e.Organizer)
       .ToListAsync(cancellationToken);
   }
 
