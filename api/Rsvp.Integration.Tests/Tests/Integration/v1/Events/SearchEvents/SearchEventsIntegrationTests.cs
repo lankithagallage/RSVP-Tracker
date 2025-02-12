@@ -15,12 +15,14 @@ using Rsvp.Infrastructure.Persistence;
 using Rsvp.Tests.Shared.Fixtures.Database;
 
 [Collection("Database collection")]
-public class EventsControllerIntegrationTests : IClassFixture<WebApplicationFactory<Program>>, IClassFixture<DatabaseFixture>
+public class EventsControllerIntegrationTests : IClassFixture<WebApplicationFactory<Program>>,
+  IClassFixture<DatabaseFixture>
 {
+  private const string BaseUrl = "/api/v1/events/search";
   private readonly HttpClient client;
+
   private readonly JsonSerializerOptions jsonOptions = new()
     { PropertyNameCaseInsensitive = true };
-  private const string BaseUrl = "/api/v1/events/search";
 
   public EventsControllerIntegrationTests(WebApplicationFactory<Program> factory, DatabaseFixture fixture)
   {
@@ -43,7 +45,7 @@ public class EventsControllerIntegrationTests : IClassFixture<WebApplicationFact
     response.EnsureSuccessStatusCode();
 
     var content = await response.Content.ReadAsStringAsync();
-    var result = JsonSerializer.Deserialize<PagedResult<List<EventDto>>>(content, jsonOptions);
+    var result = JsonSerializer.Deserialize<PagedResult<List<EventDto>>>(content, this.jsonOptions);
 
     Assert.NotNull(result);
     Assert.True(result.IsSuccess);
@@ -73,7 +75,7 @@ public class EventsControllerIntegrationTests : IClassFixture<WebApplicationFact
     response.EnsureSuccessStatusCode();
 
     var content = await response.Content.ReadAsStringAsync();
-    var result = JsonSerializer.Deserialize<PagedResult<List<EventDto>>>(content, jsonOptions);
+    var result = JsonSerializer.Deserialize<PagedResult<List<EventDto>>>(content, this.jsonOptions);
 
     Assert.NotNull(result);
     Assert.True(result.IsSuccess);
@@ -98,7 +100,7 @@ public class EventsControllerIntegrationTests : IClassFixture<WebApplicationFact
     response.EnsureSuccessStatusCode();
 
     var content = await response.Content.ReadAsStringAsync();
-    var result = JsonSerializer.Deserialize<PagedResult<List<EventDto>>>(content, jsonOptions);
+    var result = JsonSerializer.Deserialize<PagedResult<List<EventDto>>>(content, this.jsonOptions);
 
     Assert.NotNull(result);
     Assert.True(result.IsSuccess);

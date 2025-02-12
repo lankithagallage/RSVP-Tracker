@@ -25,17 +25,17 @@ public class Program
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
     builder.Services.AddControllers(mvcOptions =>
-      {
-        mvcOptions.AddResultConvention(resultStatusMap =>
-          resultStatusMap.AddDefaultMap()
-            .For(ResultStatus.Ok, HttpStatusCode.OK, resultStatusOptions => resultStatusOptions
-              .For("POST", HttpStatusCode.Created)
-              .For("DELETE", HttpStatusCode.NoContent))
-            .For(ResultStatus.Invalid, HttpStatusCode.BadRequest)
-            .For(ResultStatus.Error, HttpStatusCode.InternalServerError)
-            .For(ResultStatus.NotFound, HttpStatusCode.NotFound)
-        );
-      });
+    {
+      mvcOptions.AddResultConvention(resultStatusMap =>
+        resultStatusMap.AddDefaultMap()
+          .For(ResultStatus.Ok, HttpStatusCode.OK, resultStatusOptions => resultStatusOptions
+            .For("POST", HttpStatusCode.Created)
+            .For("DELETE", HttpStatusCode.NoContent))
+          .For(ResultStatus.Invalid, HttpStatusCode.BadRequest)
+          .For(ResultStatus.Error, HttpStatusCode.InternalServerError)
+          .For(ResultStatus.NotFound, HttpStatusCode.NotFound)
+      );
+    });
 
     builder.Services.AddServices(builder.Configuration, builder.Environment.IsDevelopment());
 

@@ -14,11 +14,11 @@ using Rsvp.Domain.Interfaces;
 
 public class SearchEventsTests
 {
-  private readonly Mock<IEventsControllerService> mockService;
-  private readonly EventsController controller;
-
   private static readonly IJsonFileReader JsonFileReader =
     new ApiJsonFileReader(Path.Combine("Tests", "Controllers", "v1", "EventsController", "SearchEvents"));
+
+  private readonly EventsController controller;
+  private readonly Mock<IEventsControllerService> mockService;
 
   public SearchEventsTests()
   {

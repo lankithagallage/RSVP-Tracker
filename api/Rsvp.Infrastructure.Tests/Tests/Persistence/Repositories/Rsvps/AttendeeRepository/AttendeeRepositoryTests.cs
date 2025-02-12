@@ -5,7 +5,6 @@ using Rsvp.Domain.Contexts.Rsvps;
 using Rsvp.Domain.Contexts.Users;
 using Rsvp.Domain.Interfaces;
 using Rsvp.Infrastructure.Persistence.Repositories.Rsvps;
-using Rsvp.Tests.Shared.Fixtures;
 using Rsvp.Tests.Shared.Fixtures.Database;
 using Rsvp.Tests.Shared.JsonObjects;
 
@@ -40,7 +39,7 @@ public class AttendeeRepositoryTests : IClassFixture<DatabaseFixture>
       {
         eventItem,
         organizer,
-        user
+        user,
       };
     });
   }

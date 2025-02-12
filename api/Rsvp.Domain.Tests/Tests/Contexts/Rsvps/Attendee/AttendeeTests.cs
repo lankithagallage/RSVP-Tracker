@@ -28,7 +28,7 @@ public class AttendeeTests
       {
         eventItem,
         organizer,
-        user
+        user,
       };
     });
   }

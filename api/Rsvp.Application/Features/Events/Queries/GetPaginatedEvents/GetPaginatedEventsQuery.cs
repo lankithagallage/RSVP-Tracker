@@ -22,9 +22,13 @@ public class GetPaginatedEventsQuery(
 
   public string Order { get; } = IsValidOrder(order) ? order!.ToLower() : "asc";
 
-  private static bool IsValidSortField(string? value) =>
-    value?.ToLower() is "date" or "title";
+  private static bool IsValidSortField(string? value)
+  {
+    return value?.ToLower() is "date" or "title";
+  }
 
-  private static bool IsValidOrder(string? value) =>
-    value?.ToLower() is "asc" or "desc";
+  private static bool IsValidOrder(string? value)
+  {
+    return value?.ToLower() is "asc" or "desc";
+  }
 }

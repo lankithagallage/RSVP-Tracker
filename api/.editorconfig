@@ -16,7 +16,7 @@ ij_html_space_inside_empty_tag = true
 max_line_length = off
 trim_trailing_whitespace = false
 
-[*.json]
+[{*.json,*.csproj}]
 max_line_length = off
 
 [*.cs]
