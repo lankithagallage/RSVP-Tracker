@@ -27,5 +27,8 @@ public static class DependencyInjection
     // CQRS Validation Pipeline
     services.AddValidatorsFromAssembly(typeof(FeatureAssemblyMarker).Assembly);
     services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
+    // CQRS Logging Pipeline
+    services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
   }
 }
