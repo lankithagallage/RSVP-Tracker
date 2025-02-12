@@ -26,8 +26,8 @@ public class DatabaseFixture : IDisposable
     services.AddDbContext<RsvpContext>(options =>
       options.UseInMemoryDatabase($"TestDatabase:{Guid.NewGuid()}"));
 
-    services.AddScoped<ISeeder, EventSeeder>();
     services.AddScoped<ISeeder, UserSeeder>();
+    services.AddScoped<ISeeder, EventSeeder>();
     services.AddScoped<ISeeder, AttendeeSeeder>();
     services.AddScoped<DatabaseInitializer>();
 

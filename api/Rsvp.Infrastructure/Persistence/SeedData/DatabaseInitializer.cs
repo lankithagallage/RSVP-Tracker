@@ -10,7 +10,7 @@ public class DatabaseInitializer(IEnumerable<ISeeder> seeders, ILogger<DatabaseI
   {
     logger.LogInformation("Starting database seeding...");
 
-    foreach (var seeder in seeders)
+    foreach (var seeder in seeders.OrderBy(s => s.Order))
     {
       seeder.Seed();
     }

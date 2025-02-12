@@ -8,6 +8,8 @@ using Rsvp.Infrastructure.Persistence.SeedData.Json;
 
 public class UserSeeder(RsvpContext context, IJsonFileReader jsonReader, ILogger<UserSeeder> logger) : ISeeder
 {
+  public int Order => 1;
+
   public void Seed()
   {
     if (context.Users.Any())

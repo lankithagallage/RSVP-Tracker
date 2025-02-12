@@ -3,11 +3,14 @@
 using Microsoft.Extensions.Logging;
 
 using Rsvp.Domain.Contexts.Events;
+using Rsvp.Domain.Contexts.Users;
 using Rsvp.Domain.Interfaces;
 using Rsvp.Infrastructure.Persistence.SeedData.Json;
 
 public class EventSeeder(RsvpContext context, IJsonFileReader jsonReader, ILogger<EventSeeder> logger) : ISeeder
 {
+  public int Order => 2;
+
   public void Seed()
   {
     if (context.Events.Any())
@@ -18,13 +21,17 @@ public class EventSeeder(RsvpContext context, IJsonFileReader jsonReader, ILogge
 
     var events = jsonReader.LoadData<EventJson>("events.json");
 
-    // @formatter:off
-    foreach (var newEvent in events.Select(e =>
-                Event.CreateNew(e.Id, e.Title, e.Description, e.StartTime, e.EndTime)))
+    foreach (var e in events)
     {
-      context.Events.Add(newEvent);
+      var organizer = context.Users.FirstOrDefault(u => u.Id == e.OrganizerId && u.Role == UserRole.Organizer);
+      if (organizer == null)
+      {
+        continue;
+      }
+
+      var @event = Event.CreateNew(e.Id, e.Title, e.Description, e.Location, e.StartTime, e.EndTime, organizer);
+      context.Events.Add(@event);
     }
-    // @formatter:on
 
     context.SaveChanges();
     logger.LogInformation("Seeded events.");
