@@ -39,7 +39,7 @@ public class Event
 
     if (organizer == null)
     {
-      throw new AggregateException("Organizer cannot be null.");
+      throw new ArgumentNullException(nameof(organizer), "Organizer cannot be null.");
     }
 
     this.Id = id;
