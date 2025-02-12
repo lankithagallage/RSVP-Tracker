@@ -18,8 +18,8 @@ public class GetPaginatedEventsQueryHandler(IEventRepository eventRepository, IM
     CancellationToken cancellationToken)
   {
     var totalCount = await eventRepository.GetTotalCountForPaginationAsync(request.Search, cancellationToken);
-    var paginatedEvents =
-      await eventRepository.GetPaginatedEventsAsync(request.Page, request.Size, request.Search, cancellationToken);
+    var paginatedEvents = await eventRepository.GetPaginatedEventsAsync(request.Page, request.Size, request.Search,
+      request.Sort, request.Order, cancellationToken);
     var eventDtos = mapper.Map<List<EventDto>>(paginatedEvents);
 
     var totalPages = request.Size >= totalCount ? 1 : totalCount / request.Size;
