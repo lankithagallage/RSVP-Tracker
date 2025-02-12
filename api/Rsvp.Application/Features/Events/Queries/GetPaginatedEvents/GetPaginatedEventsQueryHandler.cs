@@ -1,5 +1,7 @@
 ﻿namespace Rsvp.Application.Features.Events.Queries.GetPaginatedEvents;
 
+using System.Text.RegularExpressions;
+
 using Ardalis.Result;
 
 using AutoMapper;
@@ -15,9 +17,9 @@ public class GetPaginatedEventsQueryHandler(IEventRepository eventRepository, IM
   public async Task<Result<PagedResult<List<EventDto>>>> Handle(GetPaginatedEventsQuery request,
     CancellationToken cancellationToken)
   {
-    var totalCount = await eventRepository.GetTotalCountAsync(cancellationToken);
-    var paginatedEvents =
-      await eventRepository.GetPaginatedEventsAsync(request.Page, request.Size, cancellationToken);
+    var totalCount = await eventRepository.GetTotalCountForPaginationAsync(request.Search, cancellationToken);
+    var paginatedEvents = await eventRepository.GetPaginatedEventsAsync(request.Page, request.Size, request.Search,
+      request.Sort, request.Order, cancellationToken);
     var eventDtos = mapper.Map<List<EventDto>>(paginatedEvents);
 
     var totalPages = request.Size >= totalCount ? 1 : totalCount / request.Size;
@@ -27,11 +29,30 @@ public class GetPaginatedEventsQueryHandler(IEventRepository eventRepository, IM
       return Result<PagedResult<List<EventDto>>>.Invalid(new ValidationError("Page number is too high."));
     }
 
+    if (!string.IsNullOrEmpty(request.Search))
+    {
+      eventDtos = eventDtos.Select(e => HighlightSearchTerm(e, request.Search)).ToList();
+    }
+
     var pagedInfo = new PagedInfo(request.Page,
       request.Size,
       totalPages,
       totalCount);
 
     return Result<PagedResult<List<EventDto>>>.Success(new PagedResult<List<EventDto>>(pagedInfo, eventDtos));
+  }
+
+  private static EventDto HighlightSearchTerm(EventDto eventDto, string search)
+  {
+    var searchPattern = Regex.Escape(search);
+    const string replacement = "<pre>$0</pre>";
+
+    return new EventDto(
+      eventDto.Id,
+      Regex.Replace(eventDto.Title, searchPattern, replacement, RegexOptions.IgnoreCase),
+      eventDto.Description,
+      eventDto.Location,
+      eventDto.StartTime,
+      eventDto.EndTime);
   }
 }
