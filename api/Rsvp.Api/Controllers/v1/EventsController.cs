@@ -30,9 +30,9 @@ public class EventsController : ControllerBase
   [Produces(MediaTypeNames.Application.Json)]
   [ExpectedFailures(ResultStatus.Error)]
   public async Task<Result<PagedResult<List<EventDto>>>> SearchEvents([FromQuery] int page,
-    [FromQuery] int size, CancellationToken cancellationToken)
+    [FromQuery] int size, [FromQuery] string? search, CancellationToken cancellationToken)
   {
-    var query = new GetPaginatedEventsQuery(page, size);
+    var query = new GetPaginatedEventsQuery(page, size, search);
     return await this.controllerService.GetPaginatedEventsQueryAsync(query, cancellationToken);
   }
 }
