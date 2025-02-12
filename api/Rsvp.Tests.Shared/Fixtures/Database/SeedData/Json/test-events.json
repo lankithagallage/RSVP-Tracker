@@ -1,0 +1,92 @@
+[
+  {
+    "Id": "0c576588-5a9f-4ebb-a811-7ac9415faa7f",
+    "Title": "AI & Future Technology Summit",
+    "Description": "<p>Join industry leaders and innovators as we explore the latest trends in Artificial Intelligence and emerging technologies. Discover how AI is transforming industries and shaping the future.</p>",
+    "StartTime": "2125-02-09T21:53:47.575770Z",
+    "EndTime": "2125-02-10T02:53:47.575782Z",
+    "Location": "San Francisco, CA",
+    "OrganizerId": "6bfc6a69-4774-4598-b312-075ae91bebeb"
+  },
+  {
+    "Id": "08f4e2ea-a24e-4c8e-935d-6dfc9e8271d3",
+    "Title": "Global Business Leadership Forum",
+    "Description": "<p>Engage with top executives and thought leaders as they discuss the challenges and opportunities in global business leadership. Network with key decision-makers and gain valuable insights.</p>",
+    "StartTime": "2125-02-10T21:53:47.575823Z",
+    "EndTime": "2125-02-11T02:53:47.575827Z",
+    "Location": "New York City, NY",
+    "OrganizerId": "6bfc6a69-4774-4598-b312-075ae91bebeb"
+  },
+  {
+    "Id": "f682864e-583d-4f3d-8704-39ff643f3fbe",
+    "Title": "Innovators Startup Pitch Fest",
+    "Description": "<p>Watch aspiring entrepreneurs pitch their startup ideas to a panel of investors and industry experts. A great opportunity to witness the next big innovations and network with entrepreneurs.</p>",
+    "StartTime": "2125-02-11T21:53:47.575879Z",
+    "EndTime": "2125-02-12T02:53:47.575882Z",
+    "Location": "Austin, TX",
+    "OrganizerId": "6bfc6a69-4774-4598-b312-075ae91bebeb"
+  },
+  {
+    "Id": "8c597fb8-f279-4079-b80d-3ad11f21edc5",
+    "Title": "Cybersecurity & Data Protection Conference",
+    "Description": "<p>Learn from security experts about the latest threats and best practices in data protection, cybersecurity, and risk management for businesses and individuals.</p>",
+    "StartTime": "2125-02-12T21:53:47.575901Z",
+    "EndTime": "2125-02-13T02:53:47.575903Z",
+    "Location": "Seattle, WA",
+    "OrganizerId": "6bfc6a69-4774-4598-b312-075ae91bebeb"
+  },
+  {
+    "Id": "c19a4008-8ca6-41eb-add7-c98ae15d03df",
+    "Title": "Sustainable Energy & Climate Change Summit",
+    "Description": "<p>A global summit discussing the role of renewable energy, climate policies, and sustainability initiatives for a better future.</p>",
+    "StartTime": "2125-02-13T21:53:47.575912Z",
+    "EndTime": "2125-02-14T02:53:47.575915Z",
+    "Location": "Denver, CO",
+    "OrganizerId": "6bfc6a69-4774-4598-b312-075ae91bebeb"
+  },
+  {
+    "Id": "17b81ef7-60c1-4e04-b492-2af7dfdaaf6d",
+    "Title": "Next-Gen Gaming & eSports Expo",
+    "Description": "<p>Experience the future of gaming with live eSports tournaments, exclusive game previews, and meet your favorite gaming influencers.</p>",
+    "StartTime": "2125-02-14T21:53:47.575924Z",
+    "EndTime": "2125-02-15T02:53:47.575926Z",
+    "Location": "Los Angeles, CA",
+    "OrganizerId": "0960c2f7-b58a-4ec6-a492-729e20c24957"
+  },
+  {
+    "Id": "91833300-e304-44f0-a94d-e1435e6e8490",
+    "Title": "Health & Wellness Innovation Forum",
+    "Description": "<p>Join health professionals and wellness experts to explore new advancements in healthcare, mental wellness, and fitness technology.</p>",
+    "StartTime": "2125-02-15T21:53:47.575938Z",
+    "EndTime": "2125-02-16T02:53:47.575940Z",
+    "Location": "Chicago, IL",
+    "OrganizerId": "0960c2f7-b58a-4ec6-a492-729e20c24957"
+  },
+  {
+    "Id": "4c54943b-b405-46e2-9fa0-c97cb6098f6a",
+    "Title": "Blockchain & Cryptocurrency Summit",
+    "Description": "<p>Explore the latest trends in blockchain technology, decentralized finance (DeFi), and cryptocurrency investments with industry experts.</p>",
+    "StartTime": "2125-02-16T21:53:47.575955Z",
+    "EndTime": "2125-02-17T02:53:47.575958Z",
+    "Location": "Miami, FL",
+    "OrganizerId": "0960c2f7-b58a-4ec6-a492-729e20c24957"
+  },
+  {
+    "Id": "e80dc363-362d-4a0c-9074-0ceac1bdacd6",
+    "Title": "Women in Tech Leadership Conference",
+    "Description": "<p>Empowering women in technology through networking, leadership development, and mentorship opportunities.</p>",
+    "StartTime": "2125-02-17T21:53:47.575969Z",
+    "EndTime": "2125-02-18T02:53:47.575972Z",
+    "Location": "Boston, MA",
+    "OrganizerId": "0960c2f7-b58a-4ec6-a492-729e20c24957"
+  },
+  {
+    "Id": "b3f31409-6e23-48fe-bf13-b4cb4c8e3a54",
+    "Title": "Virtual Reality & Metaverse Expo",
+    "Description": "<p>Step into the metaverse and experience the future of immersive digital experiences in VR and AR.</p>",
+    "StartTime": "2125-02-18T21:53:47.576023Z",
+    "EndTime": "2125-02-19T02:53:47.576039Z",
+    "Location": "Las Vegas, NV",
+    "OrganizerId": "0960c2f7-b58a-4ec6-a492-729e20c24957"
+  }
+]

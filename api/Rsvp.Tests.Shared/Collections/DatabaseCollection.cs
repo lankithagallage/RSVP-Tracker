@@ -1,6 +1,11 @@
-﻿namespace Rsvp.Infrastructure.Tests.Collections;
+﻿namespace Rsvp.Tests.Shared.Collections;
 
-using Rsvp.Infrastructure.Tests.Fixtures;
+
+using Rsvp.Tests.Shared.Fixtures.Database;
+
+using Xunit;
 
 [CollectionDefinition("Database collection")]
 public class DatabaseCollection : ICollectionFixture<DatabaseFixture> { }
+
+

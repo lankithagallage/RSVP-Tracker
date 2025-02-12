@@ -3,7 +3,8 @@
 using Rsvp.Domain.Contexts.Users;
 using Rsvp.Domain.Interfaces;
 using Rsvp.Infrastructure.Persistence.Repositories.Users;
-using Rsvp.Infrastructure.Tests.Fixtures;
+using Rsvp.Tests.Shared.Fixtures;
+using Rsvp.Tests.Shared.Fixtures.Database;
 using Rsvp.Tests.Shared.JsonObjects;
 
 [Collection("Database collection")]
