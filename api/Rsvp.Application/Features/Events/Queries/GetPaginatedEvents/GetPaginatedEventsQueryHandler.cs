@@ -53,6 +53,8 @@ public class GetPaginatedEventsQueryHandler(IEventRepository eventRepository, IM
       eventDto.Description,
       eventDto.Location,
       eventDto.StartTime,
-      eventDto.EndTime);
+      eventDto.EndTime,
+      eventDto.IsExpired,
+      eventDto.OrganizerName);
   }
 }

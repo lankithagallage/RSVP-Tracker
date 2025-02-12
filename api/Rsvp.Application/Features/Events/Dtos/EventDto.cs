@@ -2,7 +2,10 @@
 
 public class EventDto
 {
-  public EventDto(Guid id, string title, string description, string location, DateTime startTime, DateTime endTime)
+  public EventDto() { }
+
+  public EventDto(Guid id, string title, string description, string location, DateTime startTime, DateTime endTime,
+    bool isExpired, string organizerName)
   {
     this.Id = id;
     this.Title = title;
@@ -10,6 +13,8 @@ public class EventDto
     this.Location = location;
     this.StartTime = startTime;
     this.EndTime = endTime;
+    this.IsExpired = isExpired;
+    this.OrganizerName = organizerName;
   }
 
   public Guid Id { get; init; }
@@ -18,7 +23,6 @@ public class EventDto
   public string Location { get; init; }
   public DateTime StartTime { get; init; }
   public DateTime EndTime { get; init; }
-
-  // TODO: Add IsExpired property
-  // TODO: Add OrganizerName property
+  public bool IsExpired { get; init; }
+  public string OrganizerName { get; init; }
 }
