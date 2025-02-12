@@ -14,5 +14,3 @@ charset = utf-8
 max_line_length = off
 trim_trailing_whitespace = false
 
-[*.json]
-max_line_length = off
