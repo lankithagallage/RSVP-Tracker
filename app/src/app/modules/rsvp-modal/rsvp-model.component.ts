@@ -46,7 +46,7 @@ export class RsvpModalComponent {
       },
       error: (err) => {
         this.loading = false;
-        this.errorMessage = 'RSVP failed. Please try again.';
+        this.errorMessage = err || 'RSVP failed. Please try again.';
         console.error('RSVP Error:', err);
       },
     });
