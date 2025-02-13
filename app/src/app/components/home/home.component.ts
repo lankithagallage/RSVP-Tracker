@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { EventStateService, Event } from '../../services/event-state.service';
+import { EventRepository } from '../../repository/event.repository';
+import { EventDto } from '../../services/api-client';
 
 @Component({
   selector: 'app-home',
@@ -11,13 +12,13 @@ import { EventStateService, Event } from '../../services/event-state.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  upcomingEvents: Event[] = [];
+  upcomingEvents: EventDto[] = [];
 
-  constructor(private eventState: EventStateService) {}
+  constructor(private repository: EventRepository) {}
 
   ngOnInit(): void {
-    this.eventState.getEvents().subscribe((data) => {
-      this.upcomingEvents = data.slice(0, 3);
+    this.repository.fetchEvents(1, 2).subscribe((data) => {
+      this.upcomingEvents = data;
     });
   }
 }

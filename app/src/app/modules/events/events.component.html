@@ -7,24 +7,54 @@
     </p>
   </header>
 
-  <!-- Filters & Search -->
+  <!-- Filters, Search & Sorting -->
   <div
     class="flex flex-wrap justify-between items-center w-full max-w-4xl mb-6 gap-4"
   >
     <!-- Search Bar -->
-    <div class="flex w-full sm:w-3/4 relative">
+    <div class="flex w-full relative">
       <input
         type="text"
+        [(ngModel)]="searchTerm"
         placeholder="Search events..."
-        class="w-full px-4 py-2 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
       />
+      <button
+        (click)="onSearch()"
+        class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow-md transition-all"
+      >
+        Search
+      </button>
     </div>
 
-    <!-- Date Filter -->
-    <input
-      type="date"
-      class="px-4 py-2 border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
-    />
+    <!-- Sorting Dropdowns -->
+    <div class="flex space-x-2">
+      <!-- Sort By -->
+      <select
+        [(ngModel)]="sortBy"
+        class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm"
+      >
+        <option value="date">Date</option>
+        <option value="title">Title</option>
+      </select>
+
+      <!-- Order -->
+      <select
+        [(ngModel)]="sortOrder"
+        class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm"
+      >
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
+
+      <!-- Apply Sort -->
+      <button
+        (click)="loadEvents()"
+        class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg shadow-md"
+      >
+        Sort
+      </button>
+    </div>
   </div>
 
   <!-- Events Grid -->
@@ -33,14 +63,21 @@
   >
     <!-- Event Card -->
     <div
-      *ngFor="let event of events"
-      class="bg-white shadow-md rounded-lg p-5 flex flex-col"
+      *ngFor="let event of pagedObject.value"
+      class="bg-white shadow-lg rounded-lg p-5 flex flex-col transition-transform transform hover:scale-105 hover:shadow-xl"
     >
-      <h4 class="text-lg font-bold text-gray-900">{{ event.name }}</h4>
-      <p class="text-gray-600">📅 {{ event.date }} - 📍 {{ event.location }}</p>
-      <p class="text-gray-500 text-sm mt-2 pb-10">
-        {{ event.description }}
+      <h4
+        class="text-xl font-bold text-gray-900"
+        [innerHTML]="event.title"
+      ></h4>
+      <p class="text-gray-600">
+        📅 {{ event.startTime }} - 📍 {{ event.location }}
       </p>
+      <div
+        class="truncate-text text-gray-500 text-sm mt-2 pb-10"
+        [innerHTML]="event.description"
+      ></div>
+
       <a
         routerLink="/events/{{ event.id }}"
         class="mt-auto bg-blue-600 hover:bg-blue-700 text-white text-center py-2 px-4 rounded-lg shadow-md transition-all"
@@ -49,4 +86,25 @@
       </a>
     </div>
   </section>
+
+  <!-- Pagination Controls -->
+  <div class="flex justify-center items-center mt-8 space-x-2">
+    <button
+      (click)="changePage(currentPage - 1)"
+      [disabled]="currentPage === 1"
+      class="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-700 rounded-lg shadow-md disabled:opacity-50"
+    >
+      Previous
+    </button>
+    <span class="text-lg font-semibold text-gray-700">
+      Page {{ currentPage }} of {{ pagedObject.pagedInfo?.totalPages || 1 }}
+    </span>
+    <button
+      (click)="changePage(currentPage + 1)"
+      [disabled]="currentPage >= (pagedObject.pagedInfo?.totalPages || 1)"
+      class="px-4 py-2 bg-gray-300 hover:bg-gray-400 text-gray-700 rounded-lg shadow-md disabled:opacity-50"
+    >
+      Next
+    </button>
+  </div>
 </div>
