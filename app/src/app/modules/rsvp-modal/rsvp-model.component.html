@@ -1,0 +1,37 @@
+<div class="modal-overlay">
+  <div class="modal-content">
+    <h2 class="modal-title">RSVP for Event</h2>
+
+    <div class="modal-body">
+      <input
+        type="text"
+        [(ngModel)]="firstName"
+        class="input-field"
+        placeholder="Firstname"
+      />
+
+      <input
+        type="text"
+        [(ngModel)]="lastName"
+        class="input-field"
+        placeholder="Lastname"
+      />
+
+      <input
+        type="email"
+        [(ngModel)]="email"
+        class="input-field"
+        placeholder="Email"
+      />
+
+      <p *ngIf="errorMessage" class="error-message mt-4">{{ errorMessage }}</p>
+    </div>
+
+    <div class="modal-footer mt-4">
+      <button (click)="submitRsvp()" [disabled]="loading" class="btn-primary">
+        {{ loading ? "Submitting..." : "Submit" }}
+      </button>
+      <button (click)="closeModal.emit()" class="btn-secondary">Cancel</button>
+    </div>
+  </div>
+</div>

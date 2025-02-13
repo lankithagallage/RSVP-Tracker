@@ -3,7 +3,7 @@
 using Rsvp.Domain.Contexts.Events;
 using Rsvp.Domain.Contexts.Users;
 
-public class Attendee
+public class Attendee : IIdentifiable
 {
   private static readonly TimeProvider TimeProvider = TimeProvider.System;
 
@@ -29,12 +29,13 @@ public class Attendee
     this.ModifiedAt = TimeProvider.GetUtcNow();
   }
 
-  public Guid Id { get; private set; }
   public Event Event { get; private set; }
   public User User { get; private set; }
   public RsvpStatus Status { get; private set; }
   public DateTimeOffset CreatedAt { get; private set; }
   public DateTimeOffset ModifiedAt { get; private set; }
+
+  public Guid Id { get; }
 
   public static Attendee CreateNew(Guid id, Event @event, User user)
   {

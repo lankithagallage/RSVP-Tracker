@@ -44,7 +44,7 @@ public class ValidationBehavior<TRequest, TResponse>(
 
     // Return a typed Result<TResponse>
     var errors = validationFailures.Select(f => f.ErrorMessage).ToList();
-    var validationErrors = errors.Select(s => new ValidationError(s)).ToList();
+    var validationErrors = errors.Select(s => new ValidationError("Validation", s)).ToList();
 
     // Use reflection to return Result<TResponse>.Invalid() dynamically
     var invalidResult = typeof(Result<>)

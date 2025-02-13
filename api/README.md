@@ -2,27 +2,15 @@
 
 ---
 
-## **Search & Pagination in Events API**
+## 1. **API Endpoint: `GET /api/events/search`**
 
-This document provides **detailed API documentation** for searching, sorting, and paginating events. It includes:
-
-- **Query Parameters**
-- **Example Requests**
-- **Example Responses**
-- **Swagger Documentation Setup**
-- **Postman Collection Setup**
-
----
-
-### **API Endpoint: `GET /api/events/search`**
-
-### ** Endpoint Details**
+### **Endpoint Details**
 
 | **Method** | **Endpoint**         | **Description**                              |
 |------------|----------------------|----------------------------------------------|
 | `GET`      | `/api/events/search` | Search and retrieve paginated, sorted events |
 
-### ** Query Parameters**
+### **Query Parameters**
 
 | **Parameter** | **Type** | **Required** | **Default** | **Description**                                      |
 |---------------|----------|--------------|-------------|------------------------------------------------------|
@@ -42,7 +30,7 @@ This document provides **detailed API documentation** for searching, sorting, an
 GET /api/events/search?page=1&size=10
 ```
 
-** Expected Response:**
+**Expected Response:**
 
 ```json
 {
@@ -73,7 +61,7 @@ GET /api/events/search?page=1&size=10
 GET /api/events/search?page=1&size=10&search=AI
 ```
 
-** Expected Response (Highlighted Search Term)**
+**Expected Response (Highlighted Search Term)**
 
 ```json
 {
@@ -116,7 +104,7 @@ Events are sorted **by title in descending order**.
 GET /api/events/search?page=100&size=10
 ```
 
-** Expected Response (Error Handling)**
+**Expected Response (Error Handling)**
 
 ```json
 {
@@ -124,3 +112,72 @@ GET /api/events/search?page=100&size=10
   "errors": ["Page number is too high."]
 }
 ```
+
+
+## 2. **API Endpoint: `POST /api/rsvps/{eventId}`**
+
+### **Endpoint Details**
+
+| **Method** | **Endpoint**             | **Description**                         |
+|------------|--------------------------|-----------------------------------------|
+| `POST`     | `/api/rsvps/{eventId}`    | Submit an RSVP for a specific event    |
+
+### **Request Body Parameters**
+
+| **Parameter** | **Type**   | **Required** | **Description**                                     |
+|--------------|-----------|--------------|-----------------------------------------------------|
+| `firstName`  | `string`  | Yes          | First name of the attendee.                        |
+| `lastName`   | `string`  | Yes          | Last name of the attendee.                         |
+| `email`      | `string`  | Yes          | Email address of the attendee.                     |
+
+### **Response Codes & Handling**
+
+| **Status Code** | **Description**                                         |
+|----------------|---------------------------------------------------------|
+| `201 Created`  | RSVP successfully submitted. Returns RSVP ID.           |
+| `400 Bad Request` | Invalid input fields.                                 |
+| `409 Conflict` | Attendee with the same email is already registered.     |
+
+---
+
+### **Example API Request**
+
+#### **Submit RSVP for an Event**
+```
+POST /api/rsvps/0c576588-5a9f-4ebb-a811-7ac9415faa7f
+Content-Type: application/json
+```
+
+**Request Body:**
+```json
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john.doe@example.com"
+}
+```
+
+**Expected Response (Success `201 Created`):**
+```json
+{
+  "value": "dce3d49b-6e2b-4b9e-bad5-1a9d7e8a9f2c",
+  "status": "Ok",
+  "errors": []
+}
+```
+
+---
+
+### **Handling RSVP Conflict (`409 Conflict`)**
+If the attendee has already RSVP’d for the event, a conflict error is returned.
+
+#### **Example Conflict Response**
+```json
+{
+  "title": "There was a conflict.",
+  "status": 409,
+  "detail": "Next error(s) occurred: * Attendee with this email is already registered for this event."
+}
+```
+
+---

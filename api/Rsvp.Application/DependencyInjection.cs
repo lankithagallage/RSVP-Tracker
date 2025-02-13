@@ -17,6 +17,7 @@ public static class DependencyInjection
   {
     // Controller Services
     services.AddScoped<IEventsControllerService, EventsControllerService>();
+    services.AddScoped<IRsvpControllerService, RsvpControllerService>();
 
     // AutoMapper
     services.AddAutoMapper(typeof(MappingProfile));
