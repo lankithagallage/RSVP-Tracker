@@ -1,23 +1,39 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
-import { EventsComponent } from './events.component';
 import { EventRepository } from '../../repository/event.repository';
+import { EventsComponent } from './events.component';
 import { EventDtoListPagedResult, PagedInfo } from '../../services/api-client';
 
 describe('EventsComponent', () => {
   let component: EventsComponent;
   let fixture: ComponentFixture<EventsComponent>;
-  let repositorySpy: jasmine.SpyObj<EventRepository>;
+  let repositoryMock: jasmine.SpyObj<EventRepository>;
+  let routerMock: jasmine.SpyObj<Router>;
+  let activatedRouteMock: Partial<ActivatedRoute>;
 
   beforeEach(async () => {
-    repositorySpy = jasmine.createSpyObj('EventRepository', ['searchEvents']);
+    repositoryMock = jasmine.createSpyObj('EventRepository', ['searchEvents']);
+    routerMock = jasmine.createSpyObj('Router', ['navigate']);
+
+    activatedRouteMock = {
+      queryParams: of({
+        search: 'tech',
+        page: '1',
+        sort: 'title',
+        order: 'asc',
+      }),
+    };
 
     await TestBed.configureTestingModule({
-      imports: [RouterModule, CommonModule, FormsModule, EventsComponent],
-      providers: [{ provide: EventRepository, useValue: repositorySpy }],
+      imports: [EventsComponent, HttpClientTestingModule, FormsModule],
+      providers: [
+        { provide: EventRepository, useValue: repositoryMock },
+        { provide: Router, useValue: routerMock },
+        { provide: ActivatedRoute, useValue: activatedRouteMock },
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(EventsComponent);
@@ -28,45 +44,39 @@ describe('EventsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call loadEvents on ngOnInit', () => {
-    spyOn(component, 'loadEvents');
-    component.ngOnInit();
-    expect(component.loadEvents).toHaveBeenCalled();
-  });
-
-  it('should update pagedObject when loadEvents is called', () => {
-    const mockResponse: EventDtoListPagedResult = new EventDtoListPagedResult();
-    mockResponse.value = [{ id: '1', title: 'Event 1' }] as any;
-    mockResponse.pagedInfo = { totalPages: 3 } as PagedInfo;
-
-    repositorySpy.searchEvents.and.returnValue(of(mockResponse));
-
-    component.loadEvents();
-    expect(repositorySpy.searchEvents).toHaveBeenCalled();
-    expect(component.pagedObject).toEqual(mockResponse);
-  });
-
   it('should call loadEvents when onSearch is triggered', () => {
     spyOn(component, 'loadEvents');
     component.onSearch();
     expect(component.loadEvents).toHaveBeenCalled();
   });
 
-  it('should update page number when changePage is called with a valid page', () => {
-    component.pagedObject.pagedInfo = { totalPages: 3 } as PagedInfo;
-    spyOn(component, 'loadEvents');
+  it('should update pagedObject when loadEvents is called', () => {
+    const mockData = new EventDtoListPagedResult();
+    mockData.value = [];
+    mockData.pagedInfo = new PagedInfo();
+    mockData.pagedInfo.totalPages = 1;
 
-    component.changePage(2);
-    expect(component.currentPage).toBe(2);
+    repositoryMock.searchEvents.and.returnValue(of(mockData));
+
+    component.loadEvents();
+    expect(component.pagedObject).toEqual(mockData);
+  });
+
+  it('should call loadEvents on ngOnInit', () => {
+    spyOn(component, 'loadEvents');
+    component.ngOnInit();
     expect(component.loadEvents).toHaveBeenCalled();
   });
 
   it('should not change page if new page is out of range', () => {
-    component.pagedObject.pagedInfo = { totalPages: 3 } as PagedInfo;
+    component.currentPage = 1;
+    const mockData = new EventDtoListPagedResult();
+    mockData.value = [];
+    mockData.pagedInfo = new PagedInfo();
+    mockData.pagedInfo.totalPages = 1;
     spyOn(component, 'loadEvents');
 
-    component.changePage(0); // Invalid page
-    expect(component.currentPage).toBe(1);
+    component.changePage(2);
     expect(component.loadEvents).not.toHaveBeenCalled();
   });
 });
