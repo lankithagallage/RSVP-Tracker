@@ -1,23 +1,53 @@
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { EventStateService, Event } from '../../services/event-state.service';
+import { EventRepository } from '../../repository/event.repository';
+import { EventDtoListPagedResult } from '../../services/api-client';
 
 @Component({
   selector: 'app-events',
-  standalone: true,
-  imports: [RouterModule, CommonModule],
+  imports: [RouterModule, CommonModule, FormsModule],
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.scss'],
 })
 export class EventsComponent implements OnInit {
-  events: Event[] = [];
+  pagedObject: EventDtoListPagedResult = new EventDtoListPagedResult();
+  searchTerm: string = '';
+  currentPage: number = 1;
+  pageSize: number = 6;
 
-  constructor(private eventState: EventStateService) {}
+  constructor(private repository: EventRepository) {}
 
   ngOnInit(): void {
-    this.eventState.getEvents().subscribe((data) => {
-      this.events = data.slice(0, 6);
-    });
+    this.loadEvents();
+  }
+
+  loadEvents(): void {
+    this.repository
+      .searchEvents(
+        this.searchTerm,
+        this.currentPage,
+        this.pageSize,
+        undefined,
+        undefined
+      )
+      .subscribe((data) => {
+        this.pagedObject = data || new EventDtoListPagedResult();
+      });
+  }
+
+  onSearch(): void {
+    this.loadEvents();
+  }
+
+  changePage(newPage: number): void {
+    if (
+      newPage > 0 &&
+      newPage <= (this.pagedObject.pagedInfo?.totalPages || 1)
+    ) {
+      this.currentPage = newPage;
+      this.loadEvents();
+    }
   }
 }

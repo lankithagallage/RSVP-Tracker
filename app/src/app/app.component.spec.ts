@@ -1,19 +1,17 @@
 import { TestBed } from '@angular/core/testing';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { AppComponent } from './app.component';
-import { EventApiService } from './services/event-api.service';
-import { EventStateService } from './services/event-state.service';
-import { provideHttpClient } from '@angular/common/http';
-import { provideRouter } from '@angular/router';
+import { of } from 'rxjs';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [RouterModule, AppComponent], // ✅ Use imports for standalone components
       providers: [
-        provideHttpClient(),
-        provideRouter([]),
-        EventApiService,
-        EventStateService,
+        {
+          provide: ActivatedRoute,
+          useValue: { params: of({}) }, // ✅ Mock ActivatedRoute
+        },
       ],
     }).compileComponents();
   });
@@ -22,5 +20,19 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
+  });
+
+  it('should have ngOnInit defined', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    expect(app.ngOnInit).toBeDefined();
+  });
+
+  it('should call ngOnInit without errors', () => {
+    const fixture = TestBed.createComponent(AppComponent);
+    const app = fixture.componentInstance;
+    spyOn(app, 'ngOnInit').and.callThrough();
+    app.ngOnInit();
+    expect(app.ngOnInit).toHaveBeenCalled();
   });
 });
