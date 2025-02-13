@@ -31,6 +31,13 @@ public class EventRepository(RsvpContext context) : Repository<Event>(context), 
       .ToListAsync(cancellationToken);
   }
 
+  public Task<Event?> GetByIdWithAttendeesAsync(Guid id, CancellationToken cancellationToken)
+  {
+    return context.Events
+      .Include(e => e.Attendees).ThenInclude(attendee => attendee.User)
+      .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
+  }
+
   private static IQueryable<Event> ApplySorting(IQueryable<Event> query, string? sort, string? order)
   {
     return sort?.ToLower() switch

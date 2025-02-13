@@ -31,7 +31,6 @@ public class Program
           .For(ResultStatus.Ok, HttpStatusCode.OK, resultStatusOptions => resultStatusOptions
             .For("POST", HttpStatusCode.Created)
             .For("DELETE", HttpStatusCode.NoContent))
-          .For(ResultStatus.Invalid, HttpStatusCode.BadRequest)
           .For(ResultStatus.Error, HttpStatusCode.InternalServerError)
           .For(ResultStatus.NotFound, HttpStatusCode.NotFound)
       );
