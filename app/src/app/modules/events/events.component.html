@@ -7,7 +7,7 @@
     </p>
   </header>
 
-  <!-- Filters & Search -->
+  <!-- Filters, Search & Sorting -->
   <div
     class="flex flex-wrap justify-between items-center w-full max-w-4xl mb-6 gap-4"
   >
@@ -24,6 +24,35 @@
         class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg shadow-md transition-all"
       >
         Search
+      </button>
+    </div>
+
+    <!-- Sorting Dropdowns -->
+    <div class="flex space-x-2">
+      <!-- Sort By -->
+      <select
+        [(ngModel)]="sortBy"
+        class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+      >
+        <option value="date">Date</option>
+        <option value="title">Title</option>
+      </select>
+
+      <!-- Order -->
+      <select
+        [(ngModel)]="sortOrder"
+        class="px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+      >
+        <option value="asc">Ascending</option>
+        <option value="desc">Descending</option>
+      </select>
+
+      <!-- Apply Sort -->
+      <button
+        (click)="loadEvents()"
+        class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-lg shadow-md"
+      >
+        Sort
       </button>
     </div>
   </div>

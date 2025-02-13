@@ -16,6 +16,8 @@ export class EventsComponent implements OnInit {
   searchTerm: string = '';
   currentPage: number = 1;
   pageSize: number = 6;
+  sortBy: string = 'date';
+  sortOrder: string = 'desc';
 
   constructor(private repository: EventRepository) {}
 
@@ -29,8 +31,8 @@ export class EventsComponent implements OnInit {
         this.searchTerm,
         this.currentPage,
         this.pageSize,
-        undefined,
-        undefined
+        this.sortBy,
+        this.sortOrder
       )
       .subscribe((data) => {
         this.pagedObject = data || new EventDtoListPagedResult();
