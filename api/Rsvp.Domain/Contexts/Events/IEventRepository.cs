@@ -6,4 +6,6 @@ public interface IEventRepository : IRepository<Event>
 
   Task<IEnumerable<Event>> GetPaginatedEventsAsync(
     int page, int size, string? search, string? sort, string? order, CancellationToken cancellationToken);
+
+  public Task<Event?> GetByIdWithAttendeesAsync(Guid id, CancellationToken cancellationToken);
 }

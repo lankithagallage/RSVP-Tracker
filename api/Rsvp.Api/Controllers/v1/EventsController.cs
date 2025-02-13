@@ -13,6 +13,9 @@ using Rsvp.Application.Features.Events.Dtos;
 using Rsvp.Application.Features.Events.Queries.GetPaginatedEvents;
 using Rsvp.Application.Services;
 
+/// <summary>
+/// Manages event-related operations, including searching and retrieving events.
+/// </summary>
 [ApiController]
 [ApiVersion("1")]
 [Route("api/v{version:apiVersion}/events")]
@@ -21,24 +24,30 @@ public class EventsController : ControllerBase
 {
   private readonly IEventsControllerService controllerService;
 
+  /// <summary>
+  /// Initializes a new instance of the <see cref="EventsController"/> class.
+  /// </summary>
+  /// <param name="controllerService">The service handling event-related business logic.</param>
   public EventsController(IEventsControllerService controllerService)
   {
     this.controllerService = controllerService;
   }
 
   /// <summary>
-  /// Search and retrieve paginated events.
+  /// Searches for events and retrieves a paginated list based on the provided filters.
   /// </summary>
-  /// <param name="page">Page number to retrieve.</param>
-  /// <param name="size">Number of events per page.</param>
-  /// <param name="search">Search term for filtering event titles/descriptions.</param>
-  /// <param name="sort">Sorting field ("title" or "date").</param>
-  /// <param name="order">Sorting order ("asc" or "desc").</param>
-  /// <param name="cancellationToken">Cancellation token.</param>
-  /// <returns>Paginated result of events.</returns>
+  /// <param name="page">The page number to retrieve (1-based index).</param>
+  /// <param name="size">The number of events to retrieve per page.</param>
+  /// <param name="search">Optional search term to filter events by title or description.</param>
+  /// <param name="sort">Field to sort the events by (e.g., "title" or "date"). Default is "date".</param>
+  /// <param name="order">Sorting order, either "asc" (ascending) or "desc" (descending). Default is "asc".</param>
+  /// <param name="cancellationToken">A token to cancel the request if needed.</param>
+  /// <returns>A paginated list of events matching the search criteria.</returns>
+  /// <response code="200">Returns the paginated list of events.</response>
+  /// <response code="400">If any of the query parameters are invalid.</response>
   [HttpGet("search")]
   [ProducesResponseType(typeof(PagedResult<List<EventDto>>), StatusCodes.Status200OK)]
-  [ProducesResponseType(typeof(Program), StatusCodes.Status400BadRequest)]
+  [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
   [Produces(MediaTypeNames.Application.Json)]
   public async Task<Result<PagedResult<List<EventDto>>>> SearchEvents(
     [FromQuery] int page,

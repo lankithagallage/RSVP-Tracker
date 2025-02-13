@@ -3,7 +3,7 @@
 using Rsvp.Domain.Contexts.Rsvps;
 using Rsvp.Domain.Contexts.Users;
 
-public class Event
+public class Event : IIdentifiable
 {
   private readonly List<Attendee> attendees = [];
 
@@ -51,7 +51,6 @@ public class Event
     this.Organizer = organizer;
   }
 
-  public Guid Id { get; private set; }
   public string Title { get; private set; }
   public string Description { get; private set; }
   public string Location { get; private set; }
@@ -60,6 +59,8 @@ public class Event
   public User Organizer { get; private set; }
 
   public IReadOnlyCollection<Attendee> Attendees => this.attendees.AsReadOnly();
+
+  public Guid Id { get; }
 
   public static Event CreateNew(Guid id, string title, string description, string location, DateTime startTime,
     DateTime endTime, User orgernizer)
