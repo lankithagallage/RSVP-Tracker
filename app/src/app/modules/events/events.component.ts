@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { EventRepository } from '../../repository/event.repository';
 import { EventDtoListPagedResult } from '../../services/api-client';
 
 @Component({
   selector: 'app-events',
+  standalone: true,
   imports: [RouterModule, CommonModule, FormsModule],
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.scss'],
@@ -16,21 +17,36 @@ export class EventsComponent implements OnInit {
   searchTerm: string = '';
   currentPage: number = 1;
   pageSize: number = 6;
+  sortBy: string = 'date';
+  sortOrder: string = 'desc';
 
-  constructor(private repository: EventRepository) {}
+  constructor(
+    private repository: EventRepository,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.loadEvents();
+    this.route.queryParams.subscribe((params) => {
+      this.searchTerm = params['search'] || '';
+      this.currentPage = params['page'] ? parseInt(params['page'], 10) : 1;
+      this.sortBy = params['sort'] || 'date';
+      this.sortOrder = params['order'] || 'desc';
+
+      this.loadEvents();
+    });
   }
 
   loadEvents(): void {
+    this.updateUrl();
+
     this.repository
       .searchEvents(
         this.searchTerm,
         this.currentPage,
         this.pageSize,
-        undefined,
-        undefined
+        this.sortBy,
+        this.sortOrder
       )
       .subscribe((data) => {
         this.pagedObject = data || new EventDtoListPagedResult();
@@ -38,6 +54,7 @@ export class EventsComponent implements OnInit {
   }
 
   onSearch(): void {
+    this.currentPage = 1;
     this.loadEvents();
   }
 
@@ -49,5 +66,17 @@ export class EventsComponent implements OnInit {
       this.currentPage = newPage;
       this.loadEvents();
     }
+  }
+
+  updateUrl(): void {
+    this.router.navigate([], {
+      queryParams: {
+        search: this.searchTerm || null,
+        page: this.currentPage > 1 ? this.currentPage : null,
+        sort: this.sortBy !== 'date' ? this.sortBy : null,
+        order: this.sortOrder !== 'desc' ? this.sortOrder : null,
+      },
+      queryParamsHandling: 'merge',
+    });
   }
 }
