@@ -22,7 +22,7 @@ public class GetPaginatedEventsQueryHandler(IEventRepository eventRepository, IM
       request.Sort, request.Order, cancellationToken);
     var eventDtos = mapper.Map<List<EventDto>>(paginatedEvents);
 
-    var totalPages = request.Size >= totalCount ? 1 : totalCount / request.Size;
+    var totalPages = request.Size >= totalCount ? 1 : (int)Math.Ceiling((double)totalCount / request.Size);
 
     if (request.Page > totalPages)
     {

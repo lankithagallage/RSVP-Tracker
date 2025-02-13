@@ -37,8 +37,8 @@ public class EventsController : ControllerBase
   /// <param name="cancellationToken">Cancellation token.</param>
   /// <returns>Paginated result of events.</returns>
   [HttpGet("search")]
-  [ProducesResponseType(typeof(Result<PagedResult<List<EventDto>>>), StatusCodes.Status200OK)]
-  [ProducesResponseType(typeof(Result<PagedResult<List<EventDto>>>), StatusCodes.Status400BadRequest)]
+  [ProducesResponseType(typeof(PagedResult<List<EventDto>>), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(Program), StatusCodes.Status400BadRequest)]
   [Produces(MediaTypeNames.Application.Json)]
   public async Task<Result<PagedResult<List<EventDto>>>> SearchEvents(
     [FromQuery] int page,

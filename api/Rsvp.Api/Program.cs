@@ -37,9 +37,26 @@ public class Program
       );
     });
 
+    // Add CORS services and define a policy
+    builder.Services.AddCors(options =>
+    {
+      options.AddPolicy("AllowAllOrigins", c =>
+      {
+        c.SetIsOriginAllowed(origin => true)
+          .AllowAnyMethod()
+          .AllowAnyHeader()
+          .AllowCredentials();
+      });
+    });
+
     builder.Services.AddServices(builder.Configuration, builder.Environment.IsDevelopment());
 
     var app = builder.Build().Configure();
+
+    if (app.Environment.IsDevelopment())
+    {
+      app.UseCors("AllowAllOrigins");
+    }
 
     app.Run();
   }
