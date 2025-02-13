@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 using Rsvp.Domain.Contexts;
 
 public class Repository<T>(RsvpContext context) : IRepository<T>
-  where T : class
+  where T : class, IIdentifiable
 {
   private readonly DbSet<T> dbSet = context.Set<T>();
 
-  public async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
+  public virtual async Task<T?> GetByIdAsync(Guid id, CancellationToken cancellationToken)
   {
     return await this.dbSet.FindAsync([id], cancellationToken);
   }
@@ -39,5 +39,10 @@ public class Repository<T>(RsvpContext context) : IRepository<T>
       this.dbSet.Remove(entity);
       await context.SaveChangesAsync(cancellationToken);
     }
+  }
+
+  public Task<bool> ExistsAsync(Guid id, CancellationToken cancellationToken)
+  {
+    return this.dbSet.AnyAsync(e => e.Id == id, cancellationToken);
   }
 }

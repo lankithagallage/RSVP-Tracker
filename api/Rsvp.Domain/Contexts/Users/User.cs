@@ -2,7 +2,7 @@
 
 using System.Text.RegularExpressions;
 
-public partial class User
+public partial class User : IIdentifiable
 {
   protected User() { }
 
@@ -40,12 +40,13 @@ public partial class User
     this.Role = role;
   }
 
-  public Guid Id { get; private set; }
   public string FirstName { get; private set; }
   public string LastName { get; }
   public string FullName => $"{this.FirstName} {this.LastName}";
   public string Email { get; private set; }
   public UserRole Role { get; private set; }
+
+  public Guid Id { get; }
 
   public static User CreateNew(string firstName, string lastName, string email, UserRole role)
   {
