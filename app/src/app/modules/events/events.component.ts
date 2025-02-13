@@ -4,11 +4,12 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { EventRepository } from '../../repository/event.repository';
 import { EventDtoListPagedResult } from '../../services/api-client';
+import { RsvpModalComponent } from '../rsvp-modal/rsvp-model.component';
 
 @Component({
   selector: 'app-events',
   standalone: true,
-  imports: [RouterModule, CommonModule, FormsModule],
+  imports: [RouterModule, CommonModule, FormsModule, RsvpModalComponent],
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.scss'],
 })
@@ -19,6 +20,8 @@ export class EventsComponent implements OnInit {
   pageSize: number = 6;
   sortBy: string = 'date';
   sortOrder: string = 'desc';
+  showModal = false;
+  selectedEventId: string | null = null;
 
   constructor(
     private repository: EventRepository,
@@ -78,5 +81,20 @@ export class EventsComponent implements OnInit {
       },
       queryParamsHandling: 'merge',
     });
+  }
+
+  openModal(eventId: string): void {
+    this.selectedEventId = eventId;
+    this.showModal = true;
+  }
+
+  closeModal(): void {
+    this.showModal = false;
+    this.selectedEventId = null;
+  }
+
+  onRsvpSuccess(): void {
+    alert('RSVP Successful!');
+    this.closeModal();
   }
 }

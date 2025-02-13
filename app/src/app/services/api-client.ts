@@ -147,7 +147,7 @@ export class Client {
             _responseText === ''
               ? null
               : JSON.parse(_responseText, this.jsonParseReviver);
-          result400 = Program.fromJS(resultData400);
+          result400 = ProblemDetails.fromJS(resultData400);
           return throwException(
             'Bad Request',
             status,
@@ -403,7 +403,7 @@ export class Client {
             _responseText === ''
               ? null
               : JSON.parse(_responseText, this.jsonParseReviver);
-          result400 = ProblemDetails.fromJS(resultData400);
+          result400 = ValidationProblemDetails.fromJS(resultData400);
           return throwException(
             'Bad Request',
             status,
@@ -486,6 +486,220 @@ export class Client {
       );
     }
     return _observableOf<string>(null as any);
+  }
+
+  /**
+   * @param body (optional)
+   * @return Created
+   */
+  rsvps(
+    eventId: string,
+    body: SaveRsvpRequest | undefined
+  ): Observable<GuidResult> {
+    let url_ = this.baseUrl + '/api/v1/rsvps/{eventId}';
+    if (eventId === undefined || eventId === null)
+      throw new Error("The parameter 'eventId' must be defined.");
+    url_ = url_.replace('{eventId}', encodeURIComponent('' + eventId));
+    url_ = url_.replace(/[?&]$/, '');
+
+    const content_ = JSON.stringify(body);
+
+    let options_: any = {
+      body: content_,
+      observe: 'response',
+      responseType: 'blob',
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'text/plain',
+      }),
+    };
+
+    return this.http
+      .request('post', url_, options_)
+      .pipe(
+        _observableMergeMap((response_: any) => {
+          return this.processRsvps(response_);
+        })
+      )
+      .pipe(
+        _observableCatch((response_: any) => {
+          if (response_ instanceof HttpResponseBase) {
+            try {
+              return this.processRsvps(response_ as any);
+            } catch (e) {
+              return _observableThrow(e) as any as Observable<GuidResult>;
+            }
+          } else
+            return _observableThrow(response_) as any as Observable<GuidResult>;
+        })
+      );
+  }
+
+  protected processRsvps(response: HttpResponseBase): Observable<GuidResult> {
+    const status = response.status;
+    const responseBlob =
+      response instanceof HttpResponse
+        ? response.body
+        : (response as any).error instanceof Blob
+        ? (response as any).error
+        : undefined;
+
+    let _headers: any = {};
+    if (response.headers) {
+      for (let key of response.headers.keys()) {
+        _headers[key] = response.headers.get(key);
+      }
+    }
+    if (status === 201) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          let result201: any = null;
+          let resultData201 =
+            _responseText === ''
+              ? null
+              : JSON.parse(_responseText, this.jsonParseReviver);
+          result201 = GuidResult.fromJS(resultData201);
+          return _observableOf(result201);
+        })
+      );
+    } else if (status === 400) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          let result400: any = null;
+          let resultData400 =
+            _responseText === ''
+              ? null
+              : JSON.parse(_responseText, this.jsonParseReviver);
+          result400 = ProblemDetails.fromJS(resultData400);
+          return throwException(
+            'Bad Request',
+            status,
+            _responseText,
+            _headers,
+            result400
+          );
+        })
+      );
+    } else if (status === 409) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          let result409: any = null;
+          let resultData409 =
+            _responseText === ''
+              ? null
+              : JSON.parse(_responseText, this.jsonParseReviver);
+          result409 = ProblemDetails.fromJS(resultData409);
+          return throwException(
+            'Conflict',
+            status,
+            _responseText,
+            _headers,
+            result409
+          );
+        })
+      );
+    } else if (status === 500) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          return throwException(
+            'Server Error',
+            status,
+            _responseText,
+            _headers
+          );
+        })
+      );
+    } else if (status === 403) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          let result403: any = null;
+          let resultData403 =
+            _responseText === ''
+              ? null
+              : JSON.parse(_responseText, this.jsonParseReviver);
+          result403 = ProblemDetails.fromJS(resultData403);
+          return throwException(
+            'Forbidden',
+            status,
+            _responseText,
+            _headers,
+            result403
+          );
+        })
+      );
+    } else if (status === 401) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          let result401: any = null;
+          let resultData401 =
+            _responseText === ''
+              ? null
+              : JSON.parse(_responseText, this.jsonParseReviver);
+          result401 = ProblemDetails.fromJS(resultData401);
+          return throwException(
+            'Unauthorized',
+            status,
+            _responseText,
+            _headers,
+            result401
+          );
+        })
+      );
+    } else if (status === 404) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          let result404: any = null;
+          let resultData404 =
+            _responseText === ''
+              ? null
+              : JSON.parse(_responseText, this.jsonParseReviver);
+          result404 = ProblemDetails.fromJS(resultData404);
+          return throwException(
+            'Not Found',
+            status,
+            _responseText,
+            _headers,
+            result404
+          );
+        })
+      );
+    } else if (status === 503) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          let result503: any = null;
+          let resultData503 =
+            _responseText === ''
+              ? null
+              : JSON.parse(_responseText, this.jsonParseReviver);
+          result503 = ProblemDetails.fromJS(resultData503);
+          return throwException(
+            'Server Error',
+            status,
+            _responseText,
+            _headers,
+            result503
+          );
+        })
+      );
+    } else if (status === 204) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          return throwException('No Content', status, _responseText, _headers);
+        })
+      );
+    } else if (status !== 200 && status !== 204) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          return throwException(
+            'An unexpected server error occurred.',
+            status,
+            _responseText,
+            _headers
+          );
+        })
+      );
+    }
+    return _observableOf<GuidResult>(null as any);
   }
 }
 
@@ -652,6 +866,84 @@ export interface IEventDtoListPagedResult {
   errors?: string[] | undefined;
   validationErrors?: ValidationError[] | undefined;
   pagedInfo?: PagedInfo | undefined;
+}
+
+export class GuidResult implements IGuidResult {
+  value?: string;
+  readonly status?: ResultStatus;
+  readonly isSuccess?: boolean;
+  readonly successMessage?: string | undefined;
+  readonly correlationId?: string | undefined;
+  readonly location?: string | undefined;
+  readonly errors?: string[] | undefined;
+  readonly validationErrors?: ValidationError[] | undefined;
+
+  constructor(data?: IGuidResult) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.value = _data['value'];
+      (<any>this).status = _data['status'];
+      (<any>this).isSuccess = _data['isSuccess'];
+      (<any>this).successMessage = _data['successMessage'];
+      (<any>this).correlationId = _data['correlationId'];
+      (<any>this).location = _data['location'];
+      if (Array.isArray(_data['errors'])) {
+        (<any>this).errors = [] as any;
+        for (let item of _data['errors']) (<any>this).errors!.push(item);
+      }
+      if (Array.isArray(_data['validationErrors'])) {
+        (<any>this).validationErrors = [] as any;
+        for (let item of _data['validationErrors'])
+          (<any>this).validationErrors!.push(ValidationError.fromJS(item));
+      }
+    }
+  }
+
+  static fromJS(data: any): GuidResult {
+    data = typeof data === 'object' ? data : {};
+    let result = new GuidResult();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data['value'] = this.value;
+    data['status'] = this.status;
+    data['isSuccess'] = this.isSuccess;
+    data['successMessage'] = this.successMessage;
+    data['correlationId'] = this.correlationId;
+    data['location'] = this.location;
+    if (Array.isArray(this.errors)) {
+      data['errors'] = [];
+      for (let item of this.errors) data['errors'].push(item);
+    }
+    if (Array.isArray(this.validationErrors)) {
+      data['validationErrors'] = [];
+      for (let item of this.validationErrors)
+        data['validationErrors'].push(item.toJSON());
+    }
+    return data;
+  }
+}
+
+export interface IGuidResult {
+  value?: string;
+  status?: ResultStatus;
+  isSuccess?: boolean;
+  successMessage?: string | undefined;
+  correlationId?: string | undefined;
+  location?: string | undefined;
+  errors?: string[] | undefined;
+  validationErrors?: ValidationError[] | undefined;
 }
 
 export class ProblemDetails implements IProblemDetails {
@@ -823,33 +1115,6 @@ export interface IPagedInfo {
   totalRecords?: number;
 }
 
-export class Program implements IProgram {
-  constructor(data?: IProgram) {
-    if (data) {
-      for (var property in data) {
-        if (data.hasOwnProperty(property))
-          (<any>this)[property] = (<any>data)[property];
-      }
-    }
-  }
-
-  init(_data?: any) {}
-
-  static fromJS(data: any): Program {
-    data = typeof data === 'object' ? data : {};
-    let result = new Program();
-    result.init(data);
-    return result;
-  }
-
-  toJSON(data?: any) {
-    data = typeof data === 'object' ? data : {};
-    return data;
-  }
-}
-
-export interface IProgram {}
-
 export enum ResultStatus {
   _0 = 0,
   _1 = 1,
@@ -862,6 +1127,50 @@ export enum ResultStatus {
   _8 = 8,
   _9 = 9,
   _10 = 10,
+}
+
+export class SaveRsvpRequest implements ISaveRsvpRequest {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+
+  constructor(data?: ISaveRsvpRequest) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.firstName = _data['firstName'];
+      this.lastName = _data['lastName'];
+      this.email = _data['email'];
+    }
+  }
+
+  static fromJS(data: any): SaveRsvpRequest {
+    data = typeof data === 'object' ? data : {};
+    let result = new SaveRsvpRequest();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data['firstName'] = this.firstName;
+    data['lastName'] = this.lastName;
+    data['email'] = this.email;
+    return data;
+  }
+}
+
+export interface ISaveRsvpRequest {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
 }
 
 export class ValidationError implements IValidationError {
@@ -910,6 +1219,85 @@ export interface IValidationError {
   errorMessage?: string | undefined;
   errorCode?: string | undefined;
   severity?: ValidationSeverity;
+}
+
+export class ValidationProblemDetails implements IValidationProblemDetails {
+  type?: string | undefined;
+  title?: string | undefined;
+  status?: number | undefined;
+  detail?: string | undefined;
+  instance?: string | undefined;
+  errors?: { [key: string]: string[] };
+
+  [key: string]: any;
+
+  constructor(data?: IValidationProblemDetails) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      for (var property in _data) {
+        if (_data.hasOwnProperty(property)) this[property] = _data[property];
+      }
+      this.type = _data['type'];
+      this.title = _data['title'];
+      this.status = _data['status'];
+      this.detail = _data['detail'];
+      this.instance = _data['instance'];
+      if (_data['errors']) {
+        this.errors = {} as any;
+        for (let key in _data['errors']) {
+          if (_data['errors'].hasOwnProperty(key))
+            (<any>this.errors)![key] =
+              _data['errors'][key] !== undefined ? _data['errors'][key] : [];
+        }
+      }
+    }
+  }
+
+  static fromJS(data: any): ValidationProblemDetails {
+    data = typeof data === 'object' ? data : {};
+    let result = new ValidationProblemDetails();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    for (var property in this) {
+      if (this.hasOwnProperty(property)) data[property] = this[property];
+    }
+    data['type'] = this.type;
+    data['title'] = this.title;
+    data['status'] = this.status;
+    data['detail'] = this.detail;
+    data['instance'] = this.instance;
+    if (this.errors) {
+      data['errors'] = {};
+      for (let key in this.errors) {
+        if (this.errors.hasOwnProperty(key))
+          (<any>data['errors'])[key] = (<any>this.errors)[key];
+      }
+    }
+    return data;
+  }
+}
+
+export interface IValidationProblemDetails {
+  type?: string | undefined;
+  title?: string | undefined;
+  status?: number | undefined;
+  detail?: string | undefined;
+  instance?: string | undefined;
+  errors?: { [key: string]: string[] };
+
+  [key: string]: any;
 }
 
 export enum ValidationSeverity {

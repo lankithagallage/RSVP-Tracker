@@ -12,12 +12,27 @@ import {
 export class EventRepository {
   constructor(private apiClient: Client) {}
 
+  /**
+   * Fetches a paginated list of events without search filters.
+   * @param page The page number to retrieve (default: 1).
+   * @param size The number of events per page (default: 10).
+   * @returns An observable emitting an array of `EventDto` objects.
+   */
   fetchEvents(page: number = 1, size: number = 10): Observable<EventDto[]> {
     return this.apiClient
       .search(page, size, undefined, undefined, undefined)
       .pipe(map((response: EventDtoListPagedResult) => response.value || []));
   }
 
+  /**
+   * Searches for events based on a query string with pagination and sorting.
+   * @param query The search term to filter events by title or description.
+   * @param page The page number to retrieve (default: 1).
+   * @param size The number of events per page (default: 10).
+   * @param sort The sorting field (default: "title").
+   * @param order The sorting order, either "asc" or "desc" (default: "asc").
+   * @returns An observable emitting a paginated list of events (`EventDtoListPagedResult`).
+   */
   searchEvents(
     query: string,
     page: number = 1,
