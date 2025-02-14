@@ -5,7 +5,7 @@ import {
   EventDto,
   EventDtoListPagedResult,
   EventItemDto,
-} from '../services/api-client';
+} from '../api/api-client';
 
 @Injectable({
   providedIn: 'root',

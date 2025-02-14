@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { EventRepository } from '../../repository/event.repository';
-import { EventDto } from '../../services/api-client';
+import { EventRepository } from '../../core/repositories/event.repository';
+import { EventDto } from '../../core/api/api-client';
 
 @Component({
   selector: 'app-home',

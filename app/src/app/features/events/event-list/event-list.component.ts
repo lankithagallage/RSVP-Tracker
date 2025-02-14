@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { EventRepository } from '../../../repository/event.repository';
-import { EventDtoListPagedResult } from '../../../services/api-client';
-import { RsvpModalComponent } from '../../rsvp-modal/rsvp-model.component';
+import { EventsService } from '../../../core/services/event.service';
+import { EventDtoListPagedResult } from '../../../core/api/api-client';
+import { RsvpModalComponent } from '../rsvp-modal/rsvp-model.component';
 
 @Component({
   selector: 'app-events',
@@ -24,7 +24,7 @@ export class EventsComponent implements OnInit {
   selectedEventId: string | null = null;
 
   constructor(
-    private repository: EventRepository,
+    private service: EventsService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -43,7 +43,7 @@ export class EventsComponent implements OnInit {
   loadEvents(): void {
     this.updateUrl();
 
-    this.repository
+    this.service
       .searchEvents(
         this.searchTerm,
         this.currentPage,

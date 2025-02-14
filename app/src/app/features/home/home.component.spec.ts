@@ -2,8 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { HomeComponent } from './home.component';
-import { EventRepository } from '../../repository/event.repository';
-import { EventDto } from '../../services/api-client';
+import { EventRepository } from '../../core/repositories/event.repository';
+import { EventDto } from '../../core/api/api-client';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;

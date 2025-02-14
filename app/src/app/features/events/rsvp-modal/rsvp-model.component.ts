@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RsvpRepository } from '../../repository/rsvp.repository';
-import { SaveRsvpRequest } from '../../services/api-client';
+import { RsvpRepository } from '../../../core/repositories/rsvp.repository';
+import { SaveRsvpRequest } from '../../../core/api/api-client';
 
 @Component({
   selector: 'app-rsvp-modal',
