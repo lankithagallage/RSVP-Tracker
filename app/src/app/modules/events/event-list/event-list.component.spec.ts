@@ -3,9 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { of } from 'rxjs';
-import { EventRepository } from '../../repository/event.repository';
-import { EventsComponent } from './events.component';
-import { EventDtoListPagedResult, PagedInfo } from '../../services/api-client';
+import { EventRepository } from '../../../repository/event.repository';
+import { EventsComponent } from './event-list.component';
+import {
+  EventDtoListPagedResult,
+  PagedInfo,
+} from '../../../services/api-client';
 
 describe('EventsComponent', () => {
   let component: EventsComponent;

@@ -5,6 +5,8 @@ import {
   Client,
   EventDto,
   EventDtoListPagedResult,
+  EventItemDto,
+  OrganizerDto,
 } from '../services/api-client';
 
 describe('EventRepository', () => {
@@ -12,7 +14,7 @@ describe('EventRepository', () => {
   let clientSpy: jasmine.SpyObj<Client>;
 
   beforeEach(() => {
-    clientSpy = jasmine.createSpyObj('Client', ['search']);
+    clientSpy = jasmine.createSpyObj('Client', ['search', 'events']);
 
     TestBed.configureTestingModule({
       providers: [EventRepository, { provide: Client, useValue: clientSpy }],
@@ -101,6 +103,67 @@ describe('EventRepository', () => {
 
     repository.searchEvents('AI', 1, 10, 'title', 'asc').subscribe((result) => {
       expect(result).toEqual(mockResponse);
+      done();
+    });
+  });
+
+  it('should call Client.events with correct eventId', () => {
+    const eventId = 'event-123';
+    const mockResponse = new EventItemDto({
+      id: eventId,
+      title: 'Event Test',
+      description: 'Sample event description',
+      location: 'New York',
+      startTime: new Date(),
+      attendees: [],
+      orgnizer: new OrganizerDto({ fullName: 'John Doe' }),
+    });
+
+    clientSpy.events.and.returnValue(of(mockResponse));
+
+    repository.events(eventId).subscribe();
+
+    expect(clientSpy.events).toHaveBeenCalledWith(eventId);
+  });
+
+  it('should return event details when events is called', (done) => {
+    const eventId = 'event-123';
+    const mockResponse = new EventItemDto({
+      id: eventId,
+      title: 'Event Test',
+      description: 'Sample event description',
+      location: 'New York',
+      startTime: new Date(),
+      attendees: [],
+      orgnizer: new OrganizerDto({ fullName: 'John Doe' }),
+    });
+
+    clientSpy.events.and.returnValue(of(mockResponse));
+
+    repository.events(eventId).subscribe((event) => {
+      expect(event).toEqual(mockResponse);
+      done();
+    });
+  });
+
+  it('should return an empty EventItemDto when events gets null response', (done) => {
+    const eventId = 'event-123';
+
+    clientSpy.events.and.returnValue(of(null as any));
+
+    repository.events(eventId).subscribe((event) => {
+      expect(event).toEqual(new EventItemDto()); // Should return empty EventItemDto
+      done();
+    });
+  });
+
+  it('should return an empty EventItemDto when events gets undefined response', (done) => {
+    const eventId = 'event-123';
+
+    clientSpy.events.and.returnValue(of(undefined as any));
+
+    repository.events(eventId).subscribe((event) => {
+      expect(event).toEqual(new EventItemDto()); // Should return empty EventItemDto
       done();
     });
   });

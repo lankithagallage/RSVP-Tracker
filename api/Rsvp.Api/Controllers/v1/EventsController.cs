@@ -7,9 +7,11 @@ using Ardalis.Result.AspNetCore;
 
 using Asp.Versioning;
 
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 using Rsvp.Application.Features.Events.Dtos;
+using Rsvp.Application.Features.Events.Queries.GetEventById;
 using Rsvp.Application.Features.Events.Queries.GetPaginatedEvents;
 using Rsvp.Application.Services;
 
@@ -25,12 +27,30 @@ public class EventsController : ControllerBase
   private readonly IEventsControllerService controllerService;
 
   /// <summary>
-  /// Initializes a new instance of the <see cref="EventsController"/> class.
+  /// Initializes a new instance of the <see cref="EventsController" /> class.
   /// </summary>
   /// <param name="controllerService">The service handling event-related business logic.</param>
   public EventsController(IEventsControllerService controllerService)
   {
     this.controllerService = controllerService;
+  }
+
+  /// <summary>
+  /// Retrieves the details of an event by its unique identifier.
+  /// </summary>
+  /// <param name="eventId">The unique identifier of the event.</param>
+  /// <param name="cancellationToken">A token to cancel the request if needed.</param>
+  /// <returns>The event details including attendees and organizer information.</returns>
+  /// <response code="200">Returns the event details.</response>
+  /// <response code="404">If no event is found with the provided identifier.</response>
+  [HttpGet("{eventId:guid}")]
+  [ProducesResponseType(typeof(EventItemDto), StatusCodes.Status200OK)]
+  [ProducesResponseType(typeof(NotFound), StatusCodes.Status404NotFound)]
+  [Produces(MediaTypeNames.Application.Json)]
+  public async Task<Result<EventItemDto>> GetEventById(Guid eventId, CancellationToken cancellationToken)
+  {
+    var query = new GetEventByIdQuery(eventId);
+    return await this.controllerService.GetEventByIdAsync(query, cancellationToken);
   }
 
   /// <summary>

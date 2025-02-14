@@ -70,22 +70,15 @@
         class="text-xl font-bold text-gray-900"
         [innerHTML]="event.title"
       ></h4>
-      <p class="text-gray-600">
+      <p class="text-gray-600 mb-2">
         📅 {{ event.startTime }} - 📍 {{ event.location }}
       </p>
-      <div
-        class="truncate-text text-gray-500 text-sm mt-2 pb-10"
-        [innerHTML]="event.description"
-      ></div>
-
-      <!--
       <a
         routerLink="/events/{{ event.id }}"
-        class="mt-auto bg-blue-600 hover:bg-blue-700 text-white text-center py-2 px-4 rounded-lg shadow-md transition-all"
+        class="mt-auto bg-gray-600 hover:bg-gray-700 text-white text-center py-2 px-4 rounded-lg shadow-md transition-all mb-2"
       >
-        Register Now
+        View Event
       </a>
-      -->
       <button
         (click)="openModal(event.id!)"
         class="mt-auto bg-blue-600 hover:bg-blue-700 text-white text-center py-2 px-4 rounded-lg shadow-md"
