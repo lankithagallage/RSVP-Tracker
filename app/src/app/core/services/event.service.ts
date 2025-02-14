@@ -1,7 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { EventRepository } from '../repositories/event.repository';
-import { EventDto, EventDtoListPagedResult } from '../api/api-client';
+import {
+  EventDto,
+  EventDtoListPagedResult,
+  EventItemDto,
+} from '../api/api-client';
 
 @Injectable({
   providedIn: 'root',
@@ -21,5 +25,9 @@ export class EventsService {
     order: string
   ): Observable<EventDtoListPagedResult> {
     return this.eventRepository.searchEvents(query, page, size, sort, order);
+  }
+
+  events(eventId: string): Observable<EventItemDto> {
+    return this.eventRepository.events(eventId);
   }
 }

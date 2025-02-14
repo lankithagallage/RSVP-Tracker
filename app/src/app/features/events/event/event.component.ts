@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
 import { EventItemDto } from '../../../core/api/api-client';
-import { EventRepository } from '../../../core/repositories/event.repository';
+import { EventsService } from '../../../core/services/event.service';
 import { RsvpModalComponent } from '../rsvp-modal/rsvp-model.component';
 
 @Component({
@@ -18,10 +18,7 @@ export class EventComponent implements OnInit {
   event$!: Observable<EventItemDto>;
   showModal = false;
 
-  constructor(
-    private repository: EventRepository,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private service: EventsService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.eventId = this.route.snapshot.paramMap.get('id');
@@ -31,7 +28,7 @@ export class EventComponent implements OnInit {
   }
 
   loadEvent(eventId: string): void {
-    this.event$ = this.repository.events(eventId);
+    this.event$ = this.service.events(eventId);
   }
 
   openModal(eventId: string): void {
