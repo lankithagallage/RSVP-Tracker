@@ -1,7 +1,5 @@
 ﻿namespace Rsvp.Api.Controllers.v1;
 
-using System.Net.Mime;
-
 using Ardalis.Result;
 using Ardalis.Result.AspNetCore;
 
@@ -25,7 +23,7 @@ public class RsvpController : ControllerBase
   private readonly IRsvpControllerService controllerService;
 
   /// <summary>
-  /// Initializes a new instance of the <see cref="RsvpController"/> class.
+  /// Initializes a new instance of the <see cref="RsvpController" /> class.
   /// </summary>
   /// <param name="controllerService">The service handling RSVP business logic.</param>
   public RsvpController(IRsvpControllerService controllerService)
@@ -54,4 +52,3 @@ public class RsvpController : ControllerBase
     return await this.controllerService.SaveRsvpCommandAsync(command, cancellationToken);
   }
 }
-

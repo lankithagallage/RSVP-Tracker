@@ -208,10 +208,17 @@ Located in `/api/Rsvp.Tests.Shared/` to provide reusable JSON datasets.
 ### **8.2 Future Enhancements**
 
 1. **Authentication & Authorization**
-   - Implement **JWT-based authentication** to secure API endpoints.
+
+- Implement **JWT-based authentication** to secure API endpoints.
+
 2. **Performance Optimization**
-   - Introduce **caching** (e.g., Redis) for frequently accessed queries.
+
+- Introduce **caching** (e.g., Redis) for frequently accessed queries.
+
 3. **Event Creation Feature**
-   - Add endpoint to allow users to create events.
+
+- Add endpoint to allow users to create events.
+
 4. **Notification System**
-   - Send email confirmations for RSVP submissions.
+
+- Send email confirmations for RSVP submissions.
