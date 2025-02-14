@@ -2,11 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { EventComponent } from './event.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
-import { EventRepository } from '../../../repository/event.repository';
-import { EventItemDto, OrganizerDto } from '../../../services/api-client';
+import { EventRepository } from '../../../core/repositories/event.repository';
+import { EventItemDto, OrganizerDto } from '../../../core/api/api-client';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CommonModule } from '@angular/common';
-import { RsvpModalComponent } from '../../rsvp-modal/rsvp-model.component';
+import { RsvpModalComponent } from '../rsvp-modal/rsvp-model.component';
 
 describe('EventComponent', () => {
   let component: EventComponent;

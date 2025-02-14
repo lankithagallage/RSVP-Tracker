@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Observable } from 'rxjs';
-import { EventItemDto } from '../../../services/api-client';
-import { EventRepository } from '../../../repository/event.repository';
-import { RsvpModalComponent } from '../../rsvp-modal/rsvp-model.component';
+import { EventItemDto } from '../../../core/api/api-client';
+import { EventRepository } from '../../../core/repositories/event.repository';
+import { RsvpModalComponent } from '../rsvp-modal/rsvp-model.component';
 
 @Component({
   selector: 'app-event',

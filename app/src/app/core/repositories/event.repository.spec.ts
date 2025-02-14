@@ -7,7 +7,7 @@ import {
   EventDtoListPagedResult,
   EventItemDto,
   OrganizerDto,
-} from '../services/api-client';
+} from '../api/api-client';
 
 describe('EventRepository', () => {
   let repository: EventRepository;

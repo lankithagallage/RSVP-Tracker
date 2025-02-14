@@ -3,7 +3,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { AppComponent } from './app/app.component';
 import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes';
-import { API_BASE_URL, Client } from './app/services/api-client';
+import { API_BASE_URL, Client } from './app/core/api/api-client';
 import { environment } from './environments/environment';
 
 bootstrapApplication(AppComponent, {

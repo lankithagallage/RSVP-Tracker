@@ -4,7 +4,7 @@ import {
   HttpTestingController,
 } from '@angular/common/http/testing';
 import { RsvpRepository } from './rsvp.repository';
-import { Client, GuidResult, SaveRsvpRequest } from '../services/api-client';
+import { Client, GuidResult, SaveRsvpRequest } from '../api/api-client';
 import { of, throwError } from 'rxjs';
 
 describe('RsvpRepository', () => {

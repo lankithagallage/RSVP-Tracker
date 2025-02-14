@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { EventRepository } from '../../../repository/event.repository';
-import { EventDtoListPagedResult } from '../../../services/api-client';
-import { RsvpModalComponent } from '../../rsvp-modal/rsvp-model.component';
+import { EventRepository } from '../../../core/repositories/event.repository';
+import { EventDtoListPagedResult } from '../../../core/api/api-client';
+import { RsvpModalComponent } from '../rsvp-modal/rsvp-model.component';
 
 @Component({
   selector: 'app-events',
