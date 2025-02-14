@@ -35,6 +35,7 @@ public class EventRepository(RsvpContext context) : Repository<Event>(context), 
   {
     return context.Events
       .Include(e => e.Attendees).ThenInclude(attendee => attendee.User)
+      .Include(e => e.Organizer)
       .FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
   }
 
