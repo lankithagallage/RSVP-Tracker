@@ -43,6 +43,216 @@ export class Client {
   }
 
   /**
+   * @return Success
+   */
+  events(eventId: string): Observable<EventItemDto> {
+    let url_ = this.baseUrl + '/api/v1/events/{eventId}';
+    if (eventId === undefined || eventId === null)
+      throw new Error("The parameter 'eventId' must be defined.");
+    url_ = url_.replace('{eventId}', encodeURIComponent('' + eventId));
+    url_ = url_.replace(/[?&]$/, '');
+
+    let options_: any = {
+      observe: 'response',
+      responseType: 'blob',
+      headers: new HttpHeaders({
+        Accept: 'application/json',
+      }),
+    };
+
+    return this.http
+      .request('get', url_, options_)
+      .pipe(
+        _observableMergeMap((response_: any) => {
+          return this.processEvents(response_);
+        })
+      )
+      .pipe(
+        _observableCatch((response_: any) => {
+          if (response_ instanceof HttpResponseBase) {
+            try {
+              return this.processEvents(response_ as any);
+            } catch (e) {
+              return _observableThrow(e) as any as Observable<EventItemDto>;
+            }
+          } else
+            return _observableThrow(
+              response_
+            ) as any as Observable<EventItemDto>;
+        })
+      );
+  }
+
+  protected processEvents(
+    response: HttpResponseBase
+  ): Observable<EventItemDto> {
+    const status = response.status;
+    const responseBlob =
+      response instanceof HttpResponse
+        ? response.body
+        : (response as any).error instanceof Blob
+        ? (response as any).error
+        : undefined;
+
+    let _headers: any = {};
+    if (response.headers) {
+      for (let key of response.headers.keys()) {
+        _headers[key] = response.headers.get(key);
+      }
+    }
+    if (status === 200) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          let result200: any = null;
+          let resultData200 =
+            _responseText === ''
+              ? null
+              : JSON.parse(_responseText, this.jsonParseReviver);
+          result200 = EventItemDto.fromJS(resultData200);
+          return _observableOf(result200);
+        })
+      );
+    } else if (status === 404) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          let result404: any = null;
+          let resultData404 =
+            _responseText === ''
+              ? null
+              : JSON.parse(_responseText, this.jsonParseReviver);
+          result404 = NotFound.fromJS(resultData404);
+          return throwException(
+            'Not Found',
+            status,
+            _responseText,
+            _headers,
+            result404
+          );
+        })
+      );
+    } else if (status === 500) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          return throwException(
+            'Server Error',
+            status,
+            _responseText,
+            _headers
+          );
+        })
+      );
+    } else if (status === 403) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          let result403: any = null;
+          let resultData403 =
+            _responseText === ''
+              ? null
+              : JSON.parse(_responseText, this.jsonParseReviver);
+          result403 = ProblemDetails.fromJS(resultData403);
+          return throwException(
+            'Forbidden',
+            status,
+            _responseText,
+            _headers,
+            result403
+          );
+        })
+      );
+    } else if (status === 401) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          let result401: any = null;
+          let resultData401 =
+            _responseText === ''
+              ? null
+              : JSON.parse(_responseText, this.jsonParseReviver);
+          result401 = ProblemDetails.fromJS(resultData401);
+          return throwException(
+            'Unauthorized',
+            status,
+            _responseText,
+            _headers,
+            result401
+          );
+        })
+      );
+    } else if (status === 400) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          let result400: any = null;
+          let resultData400 =
+            _responseText === ''
+              ? null
+              : JSON.parse(_responseText, this.jsonParseReviver);
+          result400 = ValidationProblemDetails.fromJS(resultData400);
+          return throwException(
+            'Bad Request',
+            status,
+            _responseText,
+            _headers,
+            result400
+          );
+        })
+      );
+    } else if (status === 409) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          let result409: any = null;
+          let resultData409 =
+            _responseText === ''
+              ? null
+              : JSON.parse(_responseText, this.jsonParseReviver);
+          result409 = ProblemDetails.fromJS(resultData409);
+          return throwException(
+            'Conflict',
+            status,
+            _responseText,
+            _headers,
+            result409
+          );
+        })
+      );
+    } else if (status === 503) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          let result503: any = null;
+          let resultData503 =
+            _responseText === ''
+              ? null
+              : JSON.parse(_responseText, this.jsonParseReviver);
+          result503 = ProblemDetails.fromJS(resultData503);
+          return throwException(
+            'Server Error',
+            status,
+            _responseText,
+            _headers,
+            result503
+          );
+        })
+      );
+    } else if (status === 204) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          return throwException('No Content', status, _responseText, _headers);
+        })
+      );
+    } else if (status !== 200 && status !== 204) {
+      return blobToText(responseBlob).pipe(
+        _observableMergeMap((_responseText) => {
+          return throwException(
+            'An unexpected server error occurred.',
+            status,
+            _responseText,
+            _headers
+          );
+        })
+      );
+    }
+    return _observableOf<EventItemDto>(null as any);
+  }
+
+  /**
    * @param page (optional)
    * @param size (optional)
    * @param search (optional)
@@ -703,6 +913,58 @@ export class Client {
   }
 }
 
+export class EventAttendeeDto implements IEventAttendeeDto {
+  userId?: string;
+  attendeeName?: string;
+  status?: RsvpStatus;
+  rsvpDate?: Date;
+
+  constructor(data?: IEventAttendeeDto) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.userId = _data['userId'];
+      this.attendeeName = _data['attendeeName'];
+      this.status = _data['status'];
+      this.rsvpDate = _data['rsvpDate']
+        ? new Date(_data['rsvpDate'].toString())
+        : <any>undefined;
+    }
+  }
+
+  static fromJS(data: any): EventAttendeeDto {
+    data = typeof data === 'object' ? data : {};
+    let result = new EventAttendeeDto();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data['userId'] = this.userId;
+    data['attendeeName'] = this.attendeeName;
+    data['status'] = this.status;
+    data['rsvpDate'] = this.rsvpDate
+      ? this.rsvpDate.toISOString()
+      : <any>undefined;
+    return data;
+  }
+}
+
+export interface IEventAttendeeDto {
+  userId?: string;
+  attendeeName?: string;
+  status?: RsvpStatus;
+  rsvpDate?: Date;
+}
+
 export class EventDto implements IEventDto {
   id?: string;
   title?: string;
@@ -866,6 +1128,52 @@ export interface IEventDtoListPagedResult {
   errors?: string[] | undefined;
   validationErrors?: ValidationError[] | undefined;
   pagedInfo?: PagedInfo | undefined;
+}
+
+export class EventItemDto extends EventDto implements IEventItemDto {
+  attendees?: EventAttendeeDto[];
+  orgnizer?: OrganizerDto;
+
+  constructor(data?: IEventItemDto) {
+    super(data);
+  }
+
+  override init(_data?: any) {
+    super.init(_data);
+    if (_data) {
+      if (Array.isArray(_data['attendees'])) {
+        this.attendees = [] as any;
+        for (let item of _data['attendees'])
+          this.attendees!.push(EventAttendeeDto.fromJS(item));
+      }
+      this.orgnizer = _data['orgnizer']
+        ? OrganizerDto.fromJS(_data['orgnizer'])
+        : <any>undefined;
+    }
+  }
+
+  static override fromJS(data: any): EventItemDto {
+    data = typeof data === 'object' ? data : {};
+    let result = new EventItemDto();
+    result.init(data);
+    return result;
+  }
+
+  override toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    if (Array.isArray(this.attendees)) {
+      data['attendees'] = [];
+      for (let item of this.attendees) data['attendees'].push(item.toJSON());
+    }
+    data['orgnizer'] = this.orgnizer ? this.orgnizer.toJSON() : <any>undefined;
+    super.toJSON(data);
+    return data;
+  }
+}
+
+export interface IEventItemDto extends IEventDto {
+  attendees?: EventAttendeeDto[];
+  orgnizer?: OrganizerDto;
 }
 
 export class GuidResult implements IGuidResult {
@@ -1067,6 +1375,86 @@ export interface IHttpValidationProblemDetails extends IProblemDetails {
   [key: string]: any;
 }
 
+export class NotFound implements INotFound {
+  readonly statusCode?: number;
+
+  constructor(data?: INotFound) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      (<any>this).statusCode = _data['statusCode'];
+    }
+  }
+
+  static fromJS(data: any): NotFound {
+    data = typeof data === 'object' ? data : {};
+    let result = new NotFound();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data['statusCode'] = this.statusCode;
+    return data;
+  }
+}
+
+export interface INotFound {
+  statusCode?: number;
+}
+
+export class OrganizerDto implements IOrganizerDto {
+  userId?: string;
+  fullName?: string;
+  email?: string;
+
+  constructor(data?: IOrganizerDto) {
+    if (data) {
+      for (var property in data) {
+        if (data.hasOwnProperty(property))
+          (<any>this)[property] = (<any>data)[property];
+      }
+    }
+  }
+
+  init(_data?: any) {
+    if (_data) {
+      this.userId = _data['userId'];
+      this.fullName = _data['fullName'];
+      this.email = _data['email'];
+    }
+  }
+
+  static fromJS(data: any): OrganizerDto {
+    data = typeof data === 'object' ? data : {};
+    let result = new OrganizerDto();
+    result.init(data);
+    return result;
+  }
+
+  toJSON(data?: any) {
+    data = typeof data === 'object' ? data : {};
+    data['userId'] = this.userId;
+    data['fullName'] = this.fullName;
+    data['email'] = this.email;
+    return data;
+  }
+}
+
+export interface IOrganizerDto {
+  userId?: string;
+  fullName?: string;
+  email?: string;
+}
+
 export class PagedInfo implements IPagedInfo {
   pageNumber?: number;
   pageSize?: number;
@@ -1127,6 +1515,12 @@ export enum ResultStatus {
   _8 = 8,
   _9 = 9,
   _10 = 10,
+}
+
+export enum RsvpStatus {
+  _0 = 0,
+  _1 = 1,
+  _2 = 2,
 }
 
 export class SaveRsvpRequest implements ISaveRsvpRequest {

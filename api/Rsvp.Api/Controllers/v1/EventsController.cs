@@ -7,6 +7,7 @@ using Ardalis.Result.AspNetCore;
 
 using Asp.Versioning;
 
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 using Rsvp.Application.Features.Events.Dtos;
@@ -44,9 +45,9 @@ public class EventsController : ControllerBase
   /// <response code="404">If no event is found with the provided identifier.</response>
   [HttpGet("{eventId:guid}")]
   [ProducesResponseType(typeof(EventItemDto), StatusCodes.Status200OK)]
-  [ProducesResponseType(typeof(NotFoundResult), StatusCodes.Status404NotFound)]
+  [ProducesResponseType(typeof(NotFound), StatusCodes.Status404NotFound)]
   [Produces(MediaTypeNames.Application.Json)]
-  public async Task<Result<EventItemDto>> GetEventById(Guid eventId, CancellationToken cancellationToken = default)
+  public async Task<Result<EventItemDto>> GetEventById(Guid eventId, CancellationToken cancellationToken)
   {
     var query = new GetEventByIdQuery(eventId);
     return await this.controllerService.GetEventByIdAsync(query, cancellationToken);

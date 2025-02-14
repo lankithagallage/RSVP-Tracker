@@ -2,16 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { EventRepository } from '../../repository/event.repository';
-import { EventDtoListPagedResult } from '../../services/api-client';
-import { RsvpModalComponent } from '../rsvp-modal/rsvp-model.component';
+import { EventRepository } from '../../../repository/event.repository';
+import { EventDtoListPagedResult } from '../../../services/api-client';
+import { RsvpModalComponent } from '../../rsvp-modal/rsvp-model.component';
 
 @Component({
   selector: 'app-events',
   standalone: true,
   imports: [RouterModule, CommonModule, FormsModule, RsvpModalComponent],
-  templateUrl: './events.component.html',
-  styleUrls: ['./events.component.scss'],
+  templateUrl: './event-list.component.html',
+  styleUrls: ['./event-list.component.scss'],
 })
 export class EventsComponent implements OnInit {
   pagedObject: EventDtoListPagedResult = new EventDtoListPagedResult();

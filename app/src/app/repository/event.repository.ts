@@ -4,6 +4,7 @@ import {
   Client,
   EventDto,
   EventDtoListPagedResult,
+  EventItemDto,
 } from '../services/api-client';
 
 @Injectable({
@@ -48,5 +49,16 @@ export class EventRepository {
             response || new EventDtoListPagedResult()
         )
       );
+  }
+
+  /**
+   * Fetches a specific event by its unique identifier.
+   * @param eventId - The unique identifier of the event.
+   * @returns An observable emitting an `EventItemDto` object containing event details.
+   */
+  events(eventId: string): Observable<EventItemDto> {
+    return this.apiClient
+      .events(eventId)
+      .pipe(map((response: EventItemDto) => response ?? new EventItemDto()));
   }
 }

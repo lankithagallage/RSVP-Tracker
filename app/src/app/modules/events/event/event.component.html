@@ -1,0 +1,85 @@
+<div class="flex flex-col items-center px-6 py-12 flex-grow">
+  <!-- Event Header -->
+  <header class="text-center mb-8">
+    <h1 class="text-4xl font-extrabold text-gray-800">
+      {{ (event$ | async)?.title }}
+    </h1>
+    <p class="text-gray-600 mt-2 text-lg">
+      Organized by: {{ (event$ | async)?.orgnizer?.fullName }}
+    </p>
+  </header>
+
+  <!-- Event Details -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 w-full max-w-6xl">
+    <div class="bg-white shadow-lg rounded-lg p-6 flex flex-col">
+      <h3 class="text-xl font-semibold text-gray-900 mb-3">Event Details</h3>
+      <p
+        class="text-gray-700 mb-2"
+        [innerHTML]="(event$ | async)?.description"
+      ></p>
+      <p class="text-gray-700 mb-2">
+        📍 <strong>Location:</strong> {{ (event$ | async)?.location }}
+      </p>
+      <p class="text-gray-700">
+        🕒 <strong>Start Time:</strong>
+        {{ (event$ | async)?.startTime | date : "long" }}
+      </p>
+    </div>
+
+    <!-- Attendees List -->
+    <div class="bg-white shadow-lg rounded-lg p-6">
+      <h3 class="text-xl font-semibold text-gray-900 mb-3">Attendees</h3>
+
+      <div
+        class="max-h-64 overflow-y-auto border border-gray-300 rounded-lg p-3"
+      >
+        <div
+          *ngFor="let attendee of (event$ | async)?.attendees"
+          class="flex justify-between items-center px-4 py-2 last:border-b-0"
+        >
+          <span class="text-gray-800">{{ attendee.attendeeName }}</span>
+          <span
+            class="px-2 py-1 rounded-lg text-white"
+            [ngClass]="{
+              'bg-red-500': attendee.status === 0,
+              'bg-green-500': attendee.status === 1,
+              'bg-yellow-500': attendee.status === 2
+            }"
+          >
+            {{
+              attendee.status === 1
+                ? "Confirmed"
+                : attendee.status === 2
+                ? "Pending"
+                : "Cancelled"
+            }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RSVP -->
+  <div class="flex justify-center items-center gap-4 mt-8">
+    <button
+      (click)="openModal(eventId!)"
+      class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg shadow-md transition-all"
+    >
+      Register Now
+    </button>
+    <a
+      routerLink="/events"
+      class="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg shadow-md transition-all"
+    >
+      Back to Events
+    </a>
+  </div>
+</div>
+
+<!-- RSVP Modal -->
+<app-rsvp-modal
+  *ngIf="showModal"
+  [eventId]="eventId!"
+  (closeModal)="closeModal()"
+  (rsvpSuccess)="onRsvpSuccess()"
+></app-rsvp-modal>
